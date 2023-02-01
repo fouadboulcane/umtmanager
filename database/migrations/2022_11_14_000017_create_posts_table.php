@@ -15,6 +15,7 @@ return new class extends Migration {
         Schema::create('posts', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title');
+            $table->string('slug');
             $table->text('content');
             $table->enum('type', ['help', 'base_knowledge']);
             $table->enum('status', ['active', 'inactive']);

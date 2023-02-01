@@ -11,7 +11,7 @@ class Post extends Model
     use HasFactory;
     use Searchable;
 
-    protected $fillable = ['title', 'content', 'type', 'status', 'category_id'];
+    protected $fillable = ['title', 'slug', 'content', 'type', 'status', 'category_id'];
 
     protected $searchableFields = ['*'];
 

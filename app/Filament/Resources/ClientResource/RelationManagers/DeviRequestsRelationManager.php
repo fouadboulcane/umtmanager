@@ -23,7 +23,7 @@ class DeviRequestsRelationManager extends HasManyRelationManager
     public static function form(Form $form): Form
     {
         return $form->schema([
-            Grid::make(['default' => 0])->schema([
+            Grid::make(12)->schema([
                 KeyValue::make('content')->columnSpan([
                     'default' => 12,
                     'md' => 12,
@@ -88,51 +88,55 @@ class DeviRequestsRelationManager extends HasManyRelationManager
                 ]),
             ])
             ->filters([
-                Tables\Filters\Filter::make('created_at')
-                    ->form([
-                        Forms\Components\DatePicker::make('created_from'),
-                        Forms\Components\DatePicker::make('created_until'),
-                    ])
-                    ->query(function (Builder $query, array $data): Builder {
-                        return $query
-                            ->when(
-                                $data['created_from'],
-                                fn(
-                                    Builder $query,
-                                    $date
-                                ): Builder => $query->whereDate(
-                                    'created_at',
-                                    '>=',
-                                    $date
-                                )
-                            )
-                            ->when(
-                                $data['created_until'],
-                                fn(
-                                    Builder $query,
-                                    $date
-                                ): Builder => $query->whereDate(
-                                    'created_at',
-                                    '<=',
-                                    $date
-                                )
-                            );
-                    }),
+                // Tables\Filters\Filter::make('created_at')
+                //     ->form([
+                //         Forms\Components\DatePicker::make('created_from'),
+                //         Forms\Components\DatePicker::make('created_until'),
+                //     ])
+                //     ->query(function (Builder $query, array $data): Builder {
+                //         return $query
+                //             ->when(
+                //                 $data['created_from'],
+                //                 fn(
+                //                     Builder $query,
+                //                     $date
+                //                 ): Builder => $query->whereDate(
+                //                     'created_at',
+                //                     '>=',
+                //                     $date
+                //                 )
+                //             )
+                //             ->when(
+                //                 $data['created_until'],
+                //                 fn(
+                //                     Builder $query,
+                //                     $date
+                //                 ): Builder => $query->whereDate(
+                //                     'created_at',
+                //                     '<=',
+                //                     $date
+                //                 )
+                //             );
+                //     }),
 
-                MultiSelectFilter::make('manifest_id')->relationship(
-                    'manifest',
-                    'title'
-                ),
+                // MultiSelectFilter::make('manifest_id')->relationship(
+                //     'manifest',
+                //     'title'
+                // ),
 
-                MultiSelectFilter::make('client_id')->relationship(
-                    'client',
-                    'name'
-                ),
+                // MultiSelectFilter::make('client_id')->relationship(
+                //     'client',
+                //     'name'
+                // ),
 
-                MultiSelectFilter::make('user_id')->relationship(
-                    'assignedMember',
-                    'name'
-                ),
+                // MultiSelectFilter::make('user_id')->relationship(
+                //     'assignedMember',
+                //     'name'
+                // ),
+            ])
+            ->headerActions([
+                Tables\Actions\AssociateAction::make(),
+                Tables\Actions\CreateAction::make()->icon('heroicon-o-plus')->modalWidth('xl'),
             ]);
     }
 }

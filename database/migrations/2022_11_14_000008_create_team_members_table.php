@@ -17,10 +17,10 @@ return new class extends Migration {
             $table->string('job_title');
             $table->string('salary')->nullable();
             $table->string('conditions')->nullable();
-            $table->integer('n_ss');
-            $table->date('recruitment_date');
+            $table->integer('n_ss')->nullable();
+            $table->date('recruitment_date')->nullable();
             $table->boolean('send_info')->default(0);
-
+            $table->unsignedBigInteger('team_member_id')->nullable();
             $table->timestamps();
         });
     }

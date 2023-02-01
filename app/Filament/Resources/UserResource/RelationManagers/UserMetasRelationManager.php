@@ -16,7 +16,7 @@ use Filament\Resources\RelationManagers\HasManyRelationManager;
 
 class UserMetasRelationManager extends HasManyRelationManager
 {
-    protected static string $relationship = 'userMetas';
+    protected static string $relationship = 'userMeta';
 
     protected static ?string $recordTitleAttribute = 'address';
 

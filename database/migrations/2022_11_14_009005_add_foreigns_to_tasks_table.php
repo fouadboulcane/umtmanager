@@ -26,6 +26,13 @@ return new class extends Migration {
                 ->on('users')
                 ->onUpdate('CASCADE')
                 ->onDelete('CASCADE');
+
+            // $table
+            //     ->foreign('creator_id')
+            //     ->references('id')
+            //     ->on('users')
+            //     ->onUpdate('CASCADE')
+            //     ->onDelete('CASCADE');
         });
     }
 
@@ -39,6 +46,7 @@ return new class extends Migration {
         Schema::table('tasks', function (Blueprint $table) {
             $table->dropForeign(['project_id']);
             $table->dropForeign(['member_id']);
+            $table->dropForeign(['creator_id']);
         });
     }
 };

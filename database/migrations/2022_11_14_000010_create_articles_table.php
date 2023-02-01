@@ -18,8 +18,6 @@ return new class extends Migration {
             $table->text('description');
             $table->decimal('price');
             $table->string('unit');
-            $table->integer('quantity');
-
             $table->timestamps();
         });
     }

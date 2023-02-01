@@ -20,6 +20,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('client_id');
             $table->unsignedBigInteger('user_id');
             $table->enum('status', ['opened', 'closed']);
+            $table->json('attachments')->nullable();
 
             $table->timestamps();
         });

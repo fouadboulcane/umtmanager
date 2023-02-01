@@ -2,14 +2,18 @@
 
 namespace App\Filament\Resources\ProjectResource\RelationManagers;
 
+use App\Models\Note;
 use Filament\Forms;
 use Filament\Tables;
 use Filament\Resources\{Form, Table};
 use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\RichEditor;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Resources\RelationManagers\MorphManyRelationManager;
+use Illuminate\Support\Facades\Auth;
+use Livewire\Component;
 
 class NotesRelationManager extends MorphManyRelationManager
 {
@@ -20,6 +24,7 @@ class NotesRelationManager extends MorphManyRelationManager
     public static function form(Form $form): Form
     {
         return $form->schema([
+            Hidden::make('user_id')->default(Auth::id()),
             Grid::make(['default' => 0])->schema([
                 TextInput::make('title')
                     ->rules(['required', 'max:255', 'string'])
@@ -46,7 +51,12 @@ class NotesRelationManager extends MorphManyRelationManager
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('title')->limit(50),
+                Tables\Columns\TextInputColumn::make('title')
+                ->action(function (Note $record, Component $livewire): void {
+                    $livewire->dispatchBrowserEvent('open-note-edit-modal', [
+                        'note' => $record->getKey(),
+                    ]);
+                }),
                 Tables\Columns\TextColumn::make('description')->limit(50),
             ])
             ->filters([

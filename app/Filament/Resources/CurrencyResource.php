@@ -15,7 +15,7 @@ class CurrencyResource extends Resource
 {
     protected static ?string $model = Currency::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-currency-dollar';
 
     protected static ?string $recordTitleAttribute = 'name';
 
@@ -56,36 +56,36 @@ class CurrencyResource extends Resource
                 Tables\Columns\TextColumn::make('symbol')->limit(50),
             ])
             ->filters([
-                Tables\Filters\Filter::make('created_at')
-                    ->form([
-                        Forms\Components\DatePicker::make('created_from'),
-                        Forms\Components\DatePicker::make('created_until'),
-                    ])
-                    ->query(function (Builder $query, array $data): Builder {
-                        return $query
-                            ->when(
-                                $data['created_from'],
-                                fn(
-                                    Builder $query,
-                                    $date
-                                ): Builder => $query->whereDate(
-                                    'created_at',
-                                    '>=',
-                                    $date
-                                )
-                            )
-                            ->when(
-                                $data['created_until'],
-                                fn(
-                                    Builder $query,
-                                    $date
-                                ): Builder => $query->whereDate(
-                                    'created_at',
-                                    '<=',
-                                    $date
-                                )
-                            );
-                    }),
+                // Tables\Filters\Filter::make('created_at')
+                //     ->form([
+                //         Forms\Components\DatePicker::make('created_from'),
+                //         Forms\Components\DatePicker::make('created_until'),
+                //     ])
+                //     ->query(function (Builder $query, array $data): Builder {
+                //         return $query
+                //             ->when(
+                //                 $data['created_from'],
+                //                 fn(
+                //                     Builder $query,
+                //                     $date
+                //                 ): Builder => $query->whereDate(
+                //                     'created_at',
+                //                     '>=',
+                //                     $date
+                //                 )
+                //             )
+                //             ->when(
+                //                 $data['created_until'],
+                //                 fn(
+                //                     Builder $query,
+                //                     $date
+                //                 ): Builder => $query->whereDate(
+                //                     'created_at',
+                //                     '<=',
+                //                     $date
+                //                 )
+                //             );
+                //     }),
                 ]);
     }
 

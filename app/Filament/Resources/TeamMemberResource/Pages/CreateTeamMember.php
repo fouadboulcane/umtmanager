@@ -8,4 +8,9 @@ use App\Filament\Resources\TeamMemberResource;
 class CreateTeamMember extends CreateRecord
 {
     protected static string $resource = TeamMemberResource::class;
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
 }

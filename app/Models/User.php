@@ -8,11 +8,13 @@ use App\Models\Traits\FilamentTrait;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Filament\Models\Contracts\FilamentUser;
+use Filament\Models\Contracts\HasAvatar;
+use Filament\Models\Contracts\HasName;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements HasAvatar, HasName
 {
     use HasRoles;
     use Notifiable;
@@ -21,11 +23,17 @@ class User extends Authenticatable
     use HasApiTokens;
     use FilamentTrait;
 
+    public function getFilamentAvatarUrl(): ?string
+    {
+        return $this->avatar_url;
+    }
+
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
+        'avatar_url',
         'email',
         'password',
-        'team_member_id',
         'enable_login',
     ];
 
@@ -38,9 +46,13 @@ class User extends Authenticatable
         'enable_login' => 'boolean',
     ];
 
+    protected $appends = [
+        'fullname'
+    ];
+
     public function teamMember()
     {
-        return $this->belongsTo(TeamMember::class);
+        return $this->hasOne(TeamMember::class, 'team_member_id');
     }
 
     public function leaves()
@@ -83,14 +95,19 @@ class User extends Authenticatable
         return $this->hasMany(SocialLink::class);
     }
 
-    public function userMetas()
+    public function userMeta()
     {
-        return $this->hasMany(UserMeta::class);
+        return $this->hasOne(UserMeta::class);
     }
 
     public function tasks()
     {
         return $this->hasMany(Task::class, 'member_id');
+    }
+
+    public function createdTasks()
+    {
+        return $this->hasMany(Task::class, 'creator_id');
     }
 
     public function deviRequests()
@@ -105,7 +122,7 @@ class User extends Authenticatable
 
     public function clients()
     {
-        return $this->belongsToMany(Client::class);
+        return $this->belongsToMany(Client::class)->withPivot('main_contact');
     }
 
     public function tasks2()
@@ -116,5 +133,15 @@ class User extends Authenticatable
     public function isSuperAdmin()
     {
         return $this->hasRole('super-admin');
+    }
+
+    public function getFilamentName(): string 
+    {
+        return "{$this->first_name} {$this->last_name}";
+    }
+
+    public function getFullnameAttribute(): string 
+    {
+        return "{$this->first_name} {$this->last_name}";
     }
 }

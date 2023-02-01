@@ -12,6 +12,8 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\DatePicker;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\TeamMemberResource\Pages;
+use App\Models\User;
+use Filament\Forms\Components\Select;
 
 class TeamMemberResource extends Resource
 {
@@ -30,6 +32,10 @@ class TeamMemberResource extends Resource
         return $form->schema([
             Card::make()->schema([
                 Grid::make(['default' => 0])->schema([
+                    Select::make('user')
+                        ->relationship('user', 'name')
+                        ->options(User::pluck('name', 'id')),
+
                     TextInput::make('job_title')
                         ->rules(['required', 'max:255', 'string'])
                         ->placeholder('Job Title')
@@ -93,6 +99,7 @@ class TeamMemberResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('user.name'),
                 Tables\Columns\TextColumn::make('job_title')->limit(50),
                 Tables\Columns\TextColumn::make('salary')->limit(50),
                 Tables\Columns\TextColumn::make('conditions')->limit(50),
@@ -131,6 +138,10 @@ class TeamMemberResource extends Resource
                                 )
                             );
                     }),
+            ])
+            ->actions([
+                Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ]);
     }
 

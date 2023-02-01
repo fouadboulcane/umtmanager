@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('noteable_id');
             $table->string('noteable_type');
+            $table->json('attachments')->nullable();
 
             $table->index('noteable_id');
             $table->index('noteable_type');

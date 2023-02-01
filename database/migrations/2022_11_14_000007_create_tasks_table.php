@@ -21,6 +21,7 @@ return new class extends Migration {
             $table->enum('status', ['todo', 'ongoing', 'done', 'closed']);
             $table->date('start_date');
             $table->date('end_date');
+            $table->unsignedBigInteger('creator_id');
             $table->unsignedBigInteger('member_id');
 
             $table->timestamps();

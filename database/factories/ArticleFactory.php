@@ -23,11 +23,10 @@ class ArticleFactory extends Factory
     public function definition()
     {
         return [
-            'title' => $this->faker->sentence(10),
+            'title' => $this->faker->sentence(3),
             'description' => $this->faker->sentence(15),
             'price' => $this->faker->randomFloat(2, 0, 9999),
-            'unit' => $this->faker->text(255),
-            'quantity' => $this->faker->randomNumber,
+            'unit' => 'U',
         ];
     }
 }

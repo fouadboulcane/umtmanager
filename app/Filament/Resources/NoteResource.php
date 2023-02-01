@@ -11,12 +11,18 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\RichEditor;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\NoteResource\Pages;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\SpatieTagsInput;
+use Filament\Tables\Columns\SpatieTagsColumn;
+use Filament\Tables\Filters\SelectFilter;
+use Illuminate\Support\Facades\Auth;
 
 class NoteResource extends Resource
 {
     protected static ?string $model = Note::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-pencil-alt';
 
     protected static ?string $recordTitleAttribute = 'title';
     
@@ -25,26 +31,25 @@ class NoteResource extends Resource
     public static function form(Form $form): Form
     {
         return $form->schema([
-            Card::make()->schema([
-                Grid::make(['default' => 0])->schema([
-                    TextInput::make('title')
-                        ->rules(['required', 'max:255', 'string'])
-                        ->placeholder('Title')
-                        ->columnSpan([
-                            'default' => 12,
-                            'md' => 12,
-                            'lg' => 12,
-                        ]),
+            Grid::make(2)->schema([
+                Hidden::make('user_id')->dehydrateStateUsing(fn() => Auth::id()),
+                Hidden::make('noteable_id')->dehydrateStateUsing(fn() => Auth::id()),
+                Hidden::make('noteable_type')->dehydrateStateUsing(fn() => 'App\Models\User'),
+                TextInput::make('title')
+                    ->rules(['required', 'max:255', 'string'])
+                    ->placeholder('Title')
+                    ->columnSpan(2),
 
-                    RichEditor::make('description')
-                        ->rules(['required', 'max:255', 'string'])
-                        ->placeholder('Description')
-                        ->columnSpan([
-                            'default' => 12,
-                            'md' => 12,
-                            'lg' => 12,
-                        ]),
-                ]),
+                RichEditor::make('description')
+                    ->rules(['required', 'max:255', 'string'])
+                    ->placeholder('Description')
+                    ->columnSpan(2),
+
+                SpatieTagsInput::make('tags')->type('notes')
+                    ->columnSpan(2),
+
+                FileUpload::make('attachments')->multiple()
+                    ->columnSpan(2)
             ]),
         ]);
     }
@@ -53,40 +58,46 @@ class NoteResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('title')->limit(50),
-                Tables\Columns\TextColumn::make('description')->limit(50),
+                Tables\Columns\TextColumn::make('created_at')->date('d-m-Y H:i'),
+                Tables\Columns\TextColumn::make('title')->limit(50)->searchable(),
+                SpatieTagsColumn::make('tags')->type('notes'),
+                // Tables\Columns\TextColumn::make('description')->limit(50),
             ])
             ->filters([
-                Tables\Filters\Filter::make('created_at')
-                    ->form([
-                        Forms\Components\DatePicker::make('created_from'),
-                        Forms\Components\DatePicker::make('created_until'),
-                    ])
-                    ->query(function (Builder $query, array $data): Builder {
-                        return $query
-                            ->when(
-                                $data['created_from'],
-                                fn(
-                                    Builder $query,
-                                    $date
-                                ): Builder => $query->whereDate(
-                                    'created_at',
-                                    '>=',
-                                    $date
-                                )
-                            )
-                            ->when(
-                                $data['created_until'],
-                                fn(
-                                    Builder $query,
-                                    $date
-                                ): Builder => $query->whereDate(
-                                    'created_at',
-                                    '<=',
-                                    $date
-                                )
-                            );
-                    }),
+                // Tables\Filters\Filter::make('created_at')
+                //     ->form([
+                //         Forms\Components\DatePicker::make('created_from'),
+                //         Forms\Components\DatePicker::make('created_until'),
+                //     ])
+                //     ->query(function (Builder $query, array $data): Builder {
+                //         return $query
+                //             ->when(
+                //                 $data['created_from'],
+                //                 fn(
+                //                     Builder $query,
+                //                     $date
+                //                 ): Builder => $query->whereDate(
+                //                     'created_at',
+                //                     '>=',
+                //                     $date
+                //                 )
+                //             )
+                //             ->when(
+                //                 $data['created_until'],
+                //                 fn(
+                //                     Builder $query,
+                //                     $date
+                //                 ): Builder => $query->whereDate(
+                //                     'created_at',
+                //                     '<=',
+                //                     $date
+                //                 )
+                //             );
+                //     }),
+            ])
+            ->actions([
+                Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ]);
     }
 
@@ -98,9 +109,15 @@ class NoteResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListNotes::route('/'),
-            'create' => Pages\CreateNote::route('/create'),
-            'edit' => Pages\EditNote::route('/{record}/edit'),
+            'index' => Pages\ManageNotes::route('/'),
+            // 'index' => Pages\ListNotes::route('/'),
+            // 'create' => Pages\CreateNote::route('/create'),
+            // 'edit' => Pages\EditNote::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->where('noteable_type', 'App\Models\User')->where('user_id', Auth::id());
     }
 }

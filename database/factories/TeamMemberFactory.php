@@ -29,6 +29,7 @@ class TeamMemberFactory extends Factory
             'n_ss' => $this->faker->randomNumber(0),
             'recruitment_date' => $this->faker->date,
             'send_info' => $this->faker->boolean,
+            'team_member_id' => \App\Models\TeamMember::factory(),
         ];
     }
 }

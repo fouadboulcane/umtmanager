@@ -26,7 +26,7 @@ class ManifestResource extends Resource
 {
     protected static ?string $model = Manifest::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-view-list';
 
     protected static ?string $recordTitleAttribute = 'title';
 
@@ -201,36 +201,40 @@ class ManifestResource extends Resource
                 Tables\Columns\BooleanColumn::make('has_files'),
             ])
             ->filters([
-                Tables\Filters\Filter::make('created_at')
-                    ->form([
-                        Forms\Components\DatePicker::make('created_from'),
-                        Forms\Components\DatePicker::make('created_until'),
-                    ])
-                    ->query(function (Builder $query, array $data): Builder {
-                        return $query
-                            ->when(
-                                $data['created_from'],
-                                fn(
-                                    Builder $query,
-                                    $date
-                                ): Builder => $query->whereDate(
-                                    'created_at',
-                                    '>=',
-                                    $date
-                                )
-                            )
-                            ->when(
-                                $data['created_until'],
-                                fn(
-                                    Builder $query,
-                                    $date
-                                ): Builder => $query->whereDate(
-                                    'created_at',
-                                    '<=',
-                                    $date
-                                )
-                            );
-                    }),
+                // Tables\Filters\Filter::make('created_at')
+                //     ->form([
+                //         Forms\Components\DatePicker::make('created_from'),
+                //         Forms\Components\DatePicker::make('created_until'),
+                //     ])
+                //     ->query(function (Builder $query, array $data): Builder {
+                //         return $query
+                //             ->when(
+                //                 $data['created_from'],
+                //                 fn(
+                //                     Builder $query,
+                //                     $date
+                //                 ): Builder => $query->whereDate(
+                //                     'created_at',
+                //                     '>=',
+                //                     $date
+                //                 )
+                //             )
+                //             ->when(
+                //                 $data['created_until'],
+                //                 fn(
+                //                     Builder $query,
+                //                     $date
+                //                 ): Builder => $query->whereDate(
+                //                     'created_at',
+                //                     '<=',
+                //                     $date
+                //                 )
+                //             );
+                //     }),
+            ])
+            ->actions([
+                Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ]);
     }
 

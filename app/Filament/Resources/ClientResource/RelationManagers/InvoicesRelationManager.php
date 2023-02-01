@@ -125,60 +125,61 @@ class InvoicesRelationManager extends HasManyRelationManager
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('id')->formatStateUsing(fn($state) => 'FA-' . sprintf('%04d', $state))->label('Invoice ID')->searchable(),
                 Tables\Columns\TextColumn::make('billing_date')->date(),
                 Tables\Columns\TextColumn::make('due_date')->date(),
-                Tables\Columns\TextColumn::make('tax')->enum([
-                    'dt' => 'Dt',
-                    'tva_19%' => 'Tva 19',
-                    'tva_9%' => 'Tva 9',
-                ]),
-                Tables\Columns\TextColumn::make('tax2')->enum([
-                    'dt' => 'Dt',
-                    'tva_19%' => 'Tva 19',
-                    'tva_9%' => 'Tva 9',
-                ]),
-                Tables\Columns\TextColumn::make('note')->limit(50),
-                Tables\Columns\BooleanColumn::make('reccurent'),
+                Tables\Columns\TextColumn::make('project.title')->limit(50),
+                Tables\Columns\TextColumn::make('total'),
+                Tables\Columns\TextColumn::make('paid'),
+                // Tables\Columns\TextColumn::make('tax')->enum([
+                //     'dt' => 'Dt',
+                //     'tva_19%' => 'Tva 19',
+                //     'tva_9%' => 'Tva 9',
+                // ]),
+                // Tables\Columns\TextColumn::make('tax2')->enum([
+                //     'dt' => 'Dt',
+                //     'tva_19%' => 'Tva 19',
+                //     'tva_9%' => 'Tva 9',
+                // ]),
+                // Tables\Columns\TextColumn::make('note')->limit(50),
                 Tables\Columns\TextColumn::make('status')->enum([
                     'paid' => 'Paid',
                     'canceled' => 'Canceled',
                     'draft' => 'Draft',
                     'late' => 'Late',
                 ]),
-                Tables\Columns\TextColumn::make('project.title')->limit(50),
-                Tables\Columns\TextColumn::make('client.name')->limit(50),
             ])
             ->filters([
-                Tables\Filters\Filter::make('created_at')
-                    ->form([
-                        Forms\Components\DatePicker::make('created_from'),
-                        Forms\Components\DatePicker::make('created_until'),
-                    ])
-                    ->query(function (Builder $query, array $data): Builder {
-                        return $query
-                            ->when(
-                                $data['created_from'],
-                                fn(
-                                    Builder $query,
-                                    $date
-                                ): Builder => $query->whereDate(
-                                    'created_at',
-                                    '>=',
-                                    $date
-                                )
-                            )
-                            ->when(
-                                $data['created_until'],
-                                fn(
-                                    Builder $query,
-                                    $date
-                                ): Builder => $query->whereDate(
-                                    'created_at',
-                                    '<=',
-                                    $date
-                                )
-                            );
-                    }),
+                // Tables\Filters\Filter::make('created_at')
+                //     ->form([
+                //         Forms\Components\DatePicker::make('created_from'),
+                //         Forms\Components\DatePicker::make('created_until'),
+                //     ])
+                //     ->query(function (Builder $query, array $data): Builder {
+                //         return $query
+                //             ->when(
+                //                 $data['created_from'],
+                //                 fn(
+                //                     Builder $query,
+                //                     $date
+                //                 ): Builder => $query->whereDate(
+                //                     'created_at',
+                //                     '>=',
+                //                     $date
+                //                 )
+                //             )
+                //             ->when(
+                //                 $data['created_until'],
+                //                 fn(
+                //                     Builder $query,
+                //                     $date
+                //                 ): Builder => $query->whereDate(
+                //                     'created_at',
+                //                     '<=',
+                //                     $date
+                //                 )
+                //             );
+                //     }),
 
                 MultiSelectFilter::make('project_id')->relationship(
                     'project',
@@ -189,6 +190,10 @@ class InvoicesRelationManager extends HasManyRelationManager
                     'client',
                     'name'
                 ),
+            ])
+            ->actions([])
+            ->headerActions([
+                Tables\Actions\CreateAction::make()->icon('heroicon-o-plus')->modalWidth('xl')
             ]);
     }
 }

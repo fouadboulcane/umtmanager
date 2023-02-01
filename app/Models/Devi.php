@@ -33,8 +33,13 @@ class Devi extends Model
         return $this->belongsTo(Client::class);
     }
 
+    // public function articles()
+    // {
+    //     return $this->belongsToMany(Article::class);
+    // }
+
     public function articles()
     {
-        return $this->belongsToMany(Article::class);
+        return $this->morphToMany(Article::class, 'articleable')->withPivot('quantity');
     }
 }

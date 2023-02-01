@@ -24,6 +24,7 @@ class Client extends Model
         'nif',
         'art',
         'online_payment',
+        'main_contact'
     ];
 
     protected $searchableFields = ['*'];
@@ -67,13 +68,34 @@ class Client extends Model
         return $this->hasMany(DeviRequest::class);
     }
 
-    public function groupClients()
+    public function contacts()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class)->withPivot('main_contact');
+    }
+
+    public function mainContact()
+    {
+        return $this->contacts->where('pivot.main_contact', 1);
     }
 
     public function notes()
     {
         return $this->morphMany(Note::class, 'noteable');
     }
+
+    public function invoiceAmount()
+    {
+        return $this->invoices->sum('total');
+    }
+
+    public function paidAmount()
+    {
+        return $this->invoices->sum('paid');
+    }
+
+    public function unpaidAmount()
+    {
+        return $this->invoiceAmount() - $this->paidAmount();
+    }
 }
+

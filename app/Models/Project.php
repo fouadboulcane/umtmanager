@@ -6,12 +6,13 @@ use App\Models\Scopes\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
+use Spatie\Tags\HasTags;
 
 class Project extends Model
 {
     use HasFactory;
     use Searchable;
+    use HasTags;
 
     protected $fillable = [
         'title',

@@ -137,7 +137,8 @@ class UsersRelationManager extends BelongsToManyRelationManager
                 ),
             ])
             // ->actions([])
-            ->headerActions([]);
+            // ->headerActions([])
+            ;
 
     }
 }

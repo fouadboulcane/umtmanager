@@ -18,7 +18,7 @@ class AnouncementResource extends Resource
 {
     protected static ?string $model = Anouncement::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-speakerphone';
 
     protected static ?string $recordTitleAttribute = 'title';
 
@@ -87,8 +87,8 @@ class AnouncementResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('title')->limit(50),
-                Tables\Columns\TextColumn::make('content')->limit(50),
+                Tables\Columns\TextColumn::make('title')->limit(50)->searchable(),
+                // Tables\Columns\TextColumn::make('content')->limit(50),
                 Tables\Columns\TextColumn::make('start_date')->date(),
                 Tables\Columns\TextColumn::make('end_date')->date(),
                 Tables\Columns\TextColumn::make('share_with')->enum([
@@ -97,36 +97,40 @@ class AnouncementResource extends Resource
                 ]),
             ])
             ->filters([
-                Tables\Filters\Filter::make('created_at')
-                    ->form([
-                        Forms\Components\DatePicker::make('created_from'),
-                        Forms\Components\DatePicker::make('created_until'),
-                    ])
-                    ->query(function (Builder $query, array $data): Builder {
-                        return $query
-                            ->when(
-                                $data['created_from'],
-                                fn(
-                                    Builder $query,
-                                    $date
-                                ): Builder => $query->whereDate(
-                                    'created_at',
-                                    '>=',
-                                    $date
-                                )
-                            )
-                            ->when(
-                                $data['created_until'],
-                                fn(
-                                    Builder $query,
-                                    $date
-                                ): Builder => $query->whereDate(
-                                    'created_at',
-                                    '<=',
-                                    $date
-                                )
-                            );
-                    }),
+                // Tables\Filters\Filter::make('created_at')
+                //     ->form([
+                //         Forms\Components\DatePicker::make('created_from'),
+                //         Forms\Components\DatePicker::make('created_until'),
+                //     ])
+                //     ->query(function (Builder $query, array $data): Builder {
+                //         return $query
+                //             ->when(
+                //                 $data['created_from'],
+                //                 fn(
+                //                     Builder $query,
+                //                     $date
+                //                 ): Builder => $query->whereDate(
+                //                     'created_at',
+                //                     '>=',
+                //                     $date
+                //                 )
+                //             )
+                //             ->when(
+                //                 $data['created_until'],
+                //                 fn(
+                //                     Builder $query,
+                //                     $date
+                //                 ): Builder => $query->whereDate(
+                //                     'created_at',
+                //                     '<=',
+                //                     $date
+                //                 )
+                //             );
+                //     }),
+            ])
+            ->actions([
+                Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make()
             ]);
     }
 

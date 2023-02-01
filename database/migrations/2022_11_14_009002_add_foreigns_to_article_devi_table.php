@@ -12,21 +12,21 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::table('article_devi', function (Blueprint $table) {
-            $table
-                ->foreign('devi_id')
-                ->references('id')
-                ->on('devis')
-                ->onUpdate('CASCADE')
-                ->onDelete('CASCADE');
+        // Schema::table('article_devi', function (Blueprint $table) {
+        //     $table
+        //         ->foreign('devi_id')
+        //         ->references('id')
+        //         ->on('devis')
+        //         ->onUpdate('CASCADE')
+        //         ->onDelete('CASCADE');
 
-            $table
-                ->foreign('article_id')
-                ->references('id')
-                ->on('articles')
-                ->onUpdate('CASCADE')
-                ->onDelete('CASCADE');
-        });
+        //     $table
+        //         ->foreign('article_id')
+        //         ->references('id')
+        //         ->on('articles')
+        //         ->onUpdate('CASCADE')
+        //         ->onDelete('CASCADE');
+        // });
     }
 
     /**
@@ -36,9 +36,9 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::table('article_devi', function (Blueprint $table) {
-            $table->dropForeign(['devi_id']);
-            $table->dropForeign(['article_id']);
-        });
+        // Schema::table('article_devi', function (Blueprint $table) {
+        //     $table->dropForeign(['devi_id']);
+        //     $table->dropForeign(['article_id']);
+        // });
     }
 };

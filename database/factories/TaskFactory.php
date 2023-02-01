@@ -23,7 +23,7 @@ class TaskFactory extends Factory
     public function definition()
     {
         return [
-            'title' => $this->faker->text(255),
+            'title' => $this->faker->sentence(5),
             'description' => $this->faker->sentence(15),
             'difficulty' => '1',
             'status' => array_rand(
@@ -33,6 +33,7 @@ class TaskFactory extends Factory
             'start_date' => $this->faker->date,
             'end_date' => $this->faker->date,
             'project_id' => \App\Models\Project::factory(),
+            'creator_id' => \App\Models\User::factory(),
             'member_id' => \App\Models\User::factory(),
         ];
     }

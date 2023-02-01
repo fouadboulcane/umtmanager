@@ -19,7 +19,7 @@ class PresenceResource extends Resource
 {
     protected static ?string $model = Presence::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-clock';
 
     protected static ?string $recordTitleAttribute = 'note';
     
@@ -59,7 +59,10 @@ class PresenceResource extends Resource
 
                     BelongsToSelect::make('user_id')
                         ->rules(['required', 'exists:users,id'])
-                        ->relationship('teamMember', 'name')
+                        ->relationship('teamMember', 'first_name')
+                        ->getOptionLabelFromRecordUsing(function($record) {
+                            return "{$record->first_name} {$record->last_name}";
+                        })
                         ->searchable()
                         ->placeholder('Team Member')
                         ->columnSpan([
@@ -76,47 +79,51 @@ class PresenceResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('teamMember.fullname')->limit(50),
                 Tables\Columns\TextColumn::make('arrival_date')->dateTime(),
                 Tables\Columns\TextColumn::make('departure_date')->dateTime(),
-                Tables\Columns\TextColumn::make('note')->limit(50),
-                Tables\Columns\TextColumn::make('teamMember.name')->limit(50),
+                // Tables\Columns\TextColumn::make('note')->limit(50),
             ])
             ->filters([
-                Tables\Filters\Filter::make('created_at')
-                    ->form([
-                        Forms\Components\DatePicker::make('created_from'),
-                        Forms\Components\DatePicker::make('created_until'),
-                    ])
-                    ->query(function (Builder $query, array $data): Builder {
-                        return $query
-                            ->when(
-                                $data['created_from'],
-                                fn(
-                                    Builder $query,
-                                    $date
-                                ): Builder => $query->whereDate(
-                                    'created_at',
-                                    '>=',
-                                    $date
-                                )
-                            )
-                            ->when(
-                                $data['created_until'],
-                                fn(
-                                    Builder $query,
-                                    $date
-                                ): Builder => $query->whereDate(
-                                    'created_at',
-                                    '<=',
-                                    $date
-                                )
-                            );
-                    }),
+                // Tables\Filters\Filter::make('created_at')
+                //     ->form([
+                //         Forms\Components\DatePicker::make('created_from'),
+                //         Forms\Components\DatePicker::make('created_until'),
+                //     ])
+                //     ->query(function (Builder $query, array $data): Builder {
+                //         return $query
+                //             ->when(
+                //                 $data['created_from'],
+                //                 fn(
+                //                     Builder $query,
+                //                     $date
+                //                 ): Builder => $query->whereDate(
+                //                     'created_at',
+                //                     '>=',
+                //                     $date
+                //                 )
+                //             )
+                //             ->when(
+                //                 $data['created_until'],
+                //                 fn(
+                //                     Builder $query,
+                //                     $date
+                //                 ): Builder => $query->whereDate(
+                //                     'created_at',
+                //                     '<=',
+                //                     $date
+                //                 )
+                //             );
+                //     }),
 
-                MultiSelectFilter::make('user_id')->relationship(
-                    'teamMember',
-                    'name'
-                ),
+                // MultiSelectFilter::make('user_id')->relationship(
+                //     'teamMember',
+                //     'name'
+                // ),
+            ])
+            ->actions([
+                Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ]);
     }
 

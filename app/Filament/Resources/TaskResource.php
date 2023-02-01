@@ -23,7 +23,7 @@ class TaskResource extends Resource
 {
     protected static ?string $model = Task::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-clipboard-list';
 
     protected static ?string $recordTitleAttribute = 'title';
 
@@ -218,6 +218,19 @@ class TaskResource extends Resource
                     'title'
                 ),
             ]);
+    }
+
+    public static function getActions(): array
+    {
+        // return [];
+        return [
+            Tables\Actions\CreateAction::make()
+                ->after(function() {
+                    // Notification::make()
+                    //     ->title('New Task Created')
+                    //     ->success();
+                })
+        ];
     }
 
     public static function getRelations(): array

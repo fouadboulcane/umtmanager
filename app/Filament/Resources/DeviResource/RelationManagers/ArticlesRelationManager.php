@@ -10,6 +10,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\RichEditor;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Resources\RelationManagers\BelongsToManyRelationManager;
+use Filament\Tables\Actions\AttachAction;
 
 class ArticlesRelationManager extends BelongsToManyRelationManager
 {
@@ -76,7 +77,7 @@ class ArticlesRelationManager extends BelongsToManyRelationManager
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('title')->limit(50),
-                Tables\Columns\TextColumn::make('description')->limit(50),
+                // Tables\Columns\TextColumn::make('description')->limit(50),
                 Tables\Columns\TextColumn::make('price'),
                 Tables\Columns\TextColumn::make('unit')->limit(50),
                 Tables\Columns\TextColumn::make('quantity'),
@@ -112,6 +113,17 @@ class ArticlesRelationManager extends BelongsToManyRelationManager
                                 )
                             );
                     }),
+            ])
+            ->actions([
+                Tables\Actions\EditAction::make(),
+                Tables\Actions\DetachAction::make(),
+            ])
+            ->headerActions([
+                AttachAction::make()
+                    ->form(fn (AttachAction $action): array => [
+                        $action->getRecordSelect()->preload(),
+                        Forms\Components\TextInput::make('quantity')->default(1)->numeric()
+                    ])
             ]);
     }
 }

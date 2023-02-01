@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6287a762478b2b6a53e0442dec6e4dc4",
+    "content-hash": "2fb7f1cb67c0341f016251bd4454306a",
     "packages": [
         {
             "name": "akaunting/laravel-money",
@@ -73,6 +73,213 @@
                 "source": "https://github.com/akaunting/laravel-money/tree/3.1.2"
             },
             "time": "2022-07-27T08:16:36+00:00"
+        },
+        {
+            "name": "alperenersoy/filament-export",
+            "version": "v0.2.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/alperenersoy/filament-export.git",
+                "reference": "9d9193a09c35ff172299612f27fe573ed1ac2961"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/alperenersoy/filament-export/zipball/9d9193a09c35ff172299612f27fe573ed1ac2961",
+                "reference": "9d9193a09c35ff172299612f27fe573ed1ac2961",
+                "shasum": ""
+            },
+            "require": {
+                "barryvdh/laravel-dompdf": "^2.0",
+                "filament/filament": "^2.0",
+                "php": "^8.0",
+                "spatie/simple-excel": "^3"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^7.6",
+                "pestphp/pest": "^1.21",
+                "pestphp/pest-plugin-livewire": "^1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "AlperenErsoy\\FilamentExport\\FilamentExportServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "AlperenErsoy\\FilamentExport\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "alperen ersoy",
+                    "email": "ersoyalperen@gmail.com"
+                }
+            ],
+            "description": "Customizable export and print functionality for Filament Admin Panel",
+            "support": {
+                "issues": "https://github.com/alperenersoy/filament-export/issues",
+                "source": "https://github.com/alperenersoy/filament-export/tree/v0.2.6"
+            },
+            "time": "2023-01-19T06:16:55+00:00"
+        },
+        {
+            "name": "awcodes/filament-badgeable-column",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/awcodes/filament-badgeable-column.git",
+                "reference": "2354999cd0ac05dcdbc0bf95b2190ad182398829"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/awcodes/filament-badgeable-column/zipball/2354999cd0ac05dcdbc0bf95b2190ad182398829",
+                "reference": "2354999cd0ac05dcdbc0bf95b2190ad182398829",
+                "shasum": ""
+            },
+            "require": {
+                "filament/filament": "^2.0",
+                "illuminate/contracts": "^9.0",
+                "php": "^8.0",
+                "spatie/laravel-package-tools": "^1.13.5"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.0",
+                "nunomaduro/collision": "^6.0",
+                "orchestra/testbench": "^7.0",
+                "pestphp/pest": "^1.21",
+                "pestphp/pest-plugin-laravel": "^1.1",
+                "pestphp/pest-plugin-livewire": "^1.0",
+                "pestphp/pest-plugin-parallel": "^0.3",
+                "phpunit/phpunit": "^9.5",
+                "spatie/laravel-ray": "^1.26"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Awcodes\\FilamentBadgeableColumn\\BadgeableColumnServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Awcodes\\FilamentBadgeableColumn\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "awcodes",
+                    "email": "awcodes1@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Filament Tables column with appendable badges.",
+            "homepage": "https://github.com/awcodes/filament-badgeable-column",
+            "keywords": [
+                "awcodes",
+                "filament",
+                "filament-badgeable-column",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/awcodes/filament-badgeable-column/issues",
+                "source": "https://github.com/awcodes/filament-badgeable-column/tree/v1.1.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/awcodes",
+                    "type": "github"
+                }
+            ],
+            "time": "2022-12-20T16:22:22+00:00"
+        },
+        {
+            "name": "barryvdh/laravel-dompdf",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/barryvdh/laravel-dompdf.git",
+                "reference": "1d47648c6cef37f715ecb8bcc5f5a656ad372e27"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/barryvdh/laravel-dompdf/zipball/1d47648c6cef37f715ecb8bcc5f5a656ad372e27",
+                "reference": "1d47648c6cef37f715ecb8bcc5f5a656ad372e27",
+                "shasum": ""
+            },
+            "require": {
+                "dompdf/dompdf": "^2",
+                "illuminate/support": "^6|^7|^8|^9",
+                "php": "^7.2 || ^8.0"
+            },
+            "require-dev": {
+                "nunomaduro/larastan": "^1|^2",
+                "orchestra/testbench": "^4|^5|^6|^7",
+                "phpro/grumphp": "^1",
+                "squizlabs/php_codesniffer": "^3.5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Barryvdh\\DomPDF\\ServiceProvider"
+                    ],
+                    "aliases": {
+                        "Pdf": "Barryvdh\\DomPDF\\Facade\\Pdf",
+                        "PDF": "Barryvdh\\DomPDF\\Facade\\Pdf"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Barryvdh\\DomPDF\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Barry vd. Heuvel",
+                    "email": "barryvdh@gmail.com"
+                }
+            ],
+            "description": "A DOMPDF Wrapper for Laravel",
+            "keywords": [
+                "dompdf",
+                "laravel",
+                "pdf"
+            ],
+            "support": {
+                "issues": "https://github.com/barryvdh/laravel-dompdf/issues",
+                "source": "https://github.com/barryvdh/laravel-dompdf/tree/v2.0.0"
+            },
+            "funding": [
+                {
+                    "url": "https://fruitcake.nl",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/barryvdh",
+                    "type": "github"
+                }
+            ],
+            "time": "2022-07-06T11:12:10+00:00"
         },
         {
             "name": "bezhansalleh/filament-shield",
@@ -717,6 +924,68 @@
             "time": "2022-02-28T11:07:21+00:00"
         },
         {
+            "name": "dompdf/dompdf",
+            "version": "v2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dompdf/dompdf.git",
+                "reference": "c5310df0e22c758c85ea5288175fc6cd777bc085"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dompdf/dompdf/zipball/c5310df0e22c758c85ea5288175fc6cd777bc085",
+                "reference": "c5310df0e22c758c85ea5288175fc6cd777bc085",
+                "shasum": ""
+            },
+            "require": {
+                "ext-dom": "*",
+                "ext-mbstring": "*",
+                "masterminds/html5": "^2.0",
+                "phenx/php-font-lib": ">=0.5.4 <1.0.0",
+                "phenx/php-svg-lib": ">=0.3.3 <1.0.0",
+                "php": "^7.1 || ^8.0"
+            },
+            "require-dev": {
+                "ext-json": "*",
+                "ext-zip": "*",
+                "mockery/mockery": "^1.3",
+                "phpunit/phpunit": "^7.5 || ^8 || ^9",
+                "squizlabs/php_codesniffer": "^3.5"
+            },
+            "suggest": {
+                "ext-gd": "Needed to process images",
+                "ext-gmagick": "Improves image processing performance",
+                "ext-imagick": "Improves image processing performance",
+                "ext-zlib": "Needed for pdf stream compression"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Dompdf\\": "src/"
+                },
+                "classmap": [
+                    "lib/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.1"
+            ],
+            "authors": [
+                {
+                    "name": "The Dompdf Community",
+                    "homepage": "https://github.com/dompdf/dompdf/blob/master/AUTHORS.md"
+                }
+            ],
+            "description": "DOMPDF is a CSS 2.1 compliant HTML to PDF converter",
+            "homepage": "https://github.com/dompdf/dompdf",
+            "support": {
+                "issues": "https://github.com/dompdf/dompdf/issues",
+                "source": "https://github.com/dompdf/dompdf/tree/v2.0.1"
+            },
+            "time": "2022-09-22T13:43:41+00:00"
+        },
+        {
             "name": "dragonmantank/cron-expression",
             "version": "v3.3.2",
             "source": {
@@ -1018,6 +1287,43 @@
                 "source": "https://github.com/filamentphp/filament"
             },
             "time": "2022-12-07T12:06:28+00:00"
+        },
+        {
+            "name": "filament/spatie-laravel-tags-plugin",
+            "version": "v2.16.66",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/filamentphp/spatie-laravel-tags-plugin.git",
+                "reference": "a964dedc6405493992597e97127d942ff91437bc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/filamentphp/spatie-laravel-tags-plugin/zipball/a964dedc6405493992597e97127d942ff91437bc",
+                "reference": "a964dedc6405493992597e97127d942ff91437bc",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": "^8.6|^9.0|^10.0",
+                "php": "^8.0",
+                "spatie/laravel-tags": "^4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Filament\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Filament support for `spatie/laravel-tags`.",
+            "homepage": "https://github.com/filamentphp/filament",
+            "support": {
+                "issues": "https://github.com/filamentphp/filament/issues",
+                "source": "https://github.com/filamentphp/filament"
+            },
+            "time": "2023-01-25T18:16:12+00:00"
         },
         {
             "name": "filament/support",
@@ -3143,6 +3449,189 @@
             "time": "2022-10-28T22:51:32+00:00"
         },
         {
+            "name": "openspout/openspout",
+            "version": "v4.12.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/openspout/openspout.git",
+                "reference": "7359af2ffdd4523f53f182f97347389362b9d352"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/openspout/openspout/zipball/7359af2ffdd4523f53f182f97347389362b9d352",
+                "reference": "7359af2ffdd4523f53f182f97347389362b9d352",
+                "shasum": ""
+            },
+            "require": {
+                "ext-dom": "*",
+                "ext-fileinfo": "*",
+                "ext-filter": "*",
+                "ext-libxml": "*",
+                "ext-xmlreader": "*",
+                "ext-zip": "*",
+                "php": "~8.0.0 || ~8.1.0 || ~8.2.0"
+            },
+            "require-dev": {
+                "ext-zlib": "*",
+                "friendsofphp/php-cs-fixer": "^3.8.0",
+                "infection/infection": "^0.26.10",
+                "phpbench/phpbench": "^1.2.5",
+                "phpstan/phpstan": "^1.6.8",
+                "phpstan/phpstan-phpunit": "^1.1.1",
+                "phpstan/phpstan-strict-rules": "^1.2.3",
+                "phpunit/phpunit": "^9.5.20"
+            },
+            "suggest": {
+                "ext-iconv": "To handle non UTF-8 CSV files (if \"php-intl\" is not already installed or is too limited)",
+                "ext-intl": "To handle non UTF-8 CSV files (if \"iconv\" is not already installed)"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.3.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "OpenSpout\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Adrien Loison",
+                    "email": "adrien@box.com"
+                }
+            ],
+            "description": "PHP Library to read and write spreadsheet files (CSV, XLSX and ODS), in a fast and scalable way",
+            "homepage": "https://github.com/openspout/openspout",
+            "keywords": [
+                "OOXML",
+                "csv",
+                "excel",
+                "memory",
+                "odf",
+                "ods",
+                "office",
+                "open",
+                "php",
+                "read",
+                "scale",
+                "spreadsheet",
+                "stream",
+                "write",
+                "xlsx"
+            ],
+            "support": {
+                "issues": "https://github.com/openspout/openspout/issues",
+                "source": "https://github.com/openspout/openspout/tree/v4.12.1"
+            },
+            "funding": [
+                {
+                    "url": "https://paypal.me/filippotessarotto",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/Slamdunk",
+                    "type": "github"
+                }
+            ],
+            "time": "2023-01-19T13:22:14+00:00"
+        },
+        {
+            "name": "phenx/php-font-lib",
+            "version": "0.5.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dompdf/php-font-lib.git",
+                "reference": "dd448ad1ce34c63d09baccd05415e361300c35b4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dompdf/php-font-lib/zipball/dd448ad1ce34c63d09baccd05415e361300c35b4",
+                "reference": "dd448ad1ce34c63d09baccd05415e361300c35b4",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*"
+            },
+            "require-dev": {
+                "symfony/phpunit-bridge": "^3 || ^4 || ^5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FontLib\\": "src/FontLib"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Ménager",
+                    "email": "fabien.menager@gmail.com"
+                }
+            ],
+            "description": "A library to read, parse, export and make subsets of different types of font files.",
+            "homepage": "https://github.com/PhenX/php-font-lib",
+            "support": {
+                "issues": "https://github.com/dompdf/php-font-lib/issues",
+                "source": "https://github.com/dompdf/php-font-lib/tree/0.5.4"
+            },
+            "time": "2021-12-17T19:44:54+00:00"
+        },
+        {
+            "name": "phenx/php-svg-lib",
+            "version": "0.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dompdf/php-svg-lib.git",
+                "reference": "76876c6cf3080bcb6f249d7d59705108166a6685"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dompdf/php-svg-lib/zipball/76876c6cf3080bcb6f249d7d59705108166a6685",
+                "reference": "76876c6cf3080bcb6f249d7d59705108166a6685",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "php": "^7.1 || ^8.0",
+                "sabberworm/php-css-parser": "^8.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7.5 || ^8.5 || ^9.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Svg\\": "src/Svg"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Ménager",
+                    "email": "fabien.menager@gmail.com"
+                }
+            ],
+            "description": "A library to read, parse and export to PDF SVG files.",
+            "homepage": "https://github.com/PhenX/php-svg-lib",
+            "support": {
+                "issues": "https://github.com/dompdf/php-svg-lib/issues",
+                "source": "https://github.com/dompdf/php-svg-lib/tree/0.5.0"
+            },
+            "time": "2022-09-06T12:16:56+00:00"
+        },
+        {
             "name": "phpoption/phpoption",
             "version": "1.9.0",
             "source": {
@@ -3216,6 +3705,72 @@
                 }
             ],
             "time": "2022-07-30T15:51:26+00:00"
+        },
+        {
+            "name": "phpsa/filament-password-reveal",
+            "version": "v1.1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpsa/filament-password-reveal.git",
+                "reference": "1b5880f3d15e16c47835fcfaf8f3a4923566a235"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpsa/filament-password-reveal/zipball/1b5880f3d15e16c47835fcfaf8f3a4923566a235",
+                "reference": "1b5880f3d15e16c47835fcfaf8f3a4923566a235",
+                "shasum": ""
+            },
+            "require": {
+                "filament/forms": "^2.9",
+                "php": "^8.0",
+                "spatie/laravel-package-tools": "^1.10"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Phpsa\\FilamentPasswordReveal\\FilamentPasswordRevealProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Phpsa\\FilamentPasswordReveal\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Craig G Smith",
+                    "email": "vxdhost@gmail.com"
+                }
+            ],
+            "description": "Password Input with option to show",
+            "homepage": "https://cgs4k.nz",
+            "keywords": [
+                "cli",
+                "filament",
+                "fun",
+                "laravel",
+                "resource",
+                "ui",
+                "user",
+                "widget"
+            ],
+            "support": {
+                "issues": "https://github.com/phpsa/filament-password-reveal/issues",
+                "source": "https://github.com/phpsa/filament-password-reveal/tree/v1.1.3"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/phpsa",
+                    "type": "github"
+                }
+            ],
+            "time": "2022-10-10T19:52:28+00:00"
         },
         {
             "name": "psr/container",
@@ -3951,6 +4506,133 @@
             "time": "2022-09-02T11:04:28+00:00"
         },
         {
+            "name": "sabberworm/php-css-parser",
+            "version": "8.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sabberworm/PHP-CSS-Parser.git",
+                "reference": "e41d2140031d533348b2192a83f02d8dd8a71d30"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sabberworm/PHP-CSS-Parser/zipball/e41d2140031d533348b2192a83f02d8dd8a71d30",
+                "reference": "e41d2140031d533348b2192a83f02d8dd8a71d30",
+                "shasum": ""
+            },
+            "require": {
+                "ext-iconv": "*",
+                "php": ">=5.6.20"
+            },
+            "require-dev": {
+                "codacy/coverage": "^1.4",
+                "phpunit/phpunit": "^4.8.36"
+            },
+            "suggest": {
+                "ext-mbstring": "for parsing UTF-8 CSS"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Sabberworm\\CSS\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Raphael Schweikert"
+                }
+            ],
+            "description": "Parser for CSS Files written in PHP",
+            "homepage": "https://www.sabberworm.com/blog/2010/6/10/php-css-parser",
+            "keywords": [
+                "css",
+                "parser",
+                "stylesheet"
+            ],
+            "support": {
+                "issues": "https://github.com/sabberworm/PHP-CSS-Parser/issues",
+                "source": "https://github.com/sabberworm/PHP-CSS-Parser/tree/8.4.0"
+            },
+            "time": "2021-12-11T13:40:54+00:00"
+        },
+        {
+            "name": "spatie/eloquent-sortable",
+            "version": "4.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/eloquent-sortable.git",
+                "reference": "74994d10a17d15d2cdb319d6b2ad7cb6fa067c0a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/eloquent-sortable/zipball/74994d10a17d15d2cdb319d6b2ad7cb6fa067c0a",
+                "reference": "74994d10a17d15d2cdb319d6b2ad7cb6fa067c0a",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": "^9.0|^10.0",
+                "illuminate/support": "^9.0|^10.0",
+                "nesbot/carbon": "^2.63",
+                "php": "^8.1",
+                "spatie/laravel-package-tools": "^1.9"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^7.0|^8.0",
+                "phpunit/phpunit": "^9.5"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Spatie\\EloquentSortable\\EloquentSortableServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\EloquentSortable\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be"
+                }
+            ],
+            "description": "Sortable behaviour for eloquent models",
+            "homepage": "https://github.com/spatie/eloquent-sortable",
+            "keywords": [
+                "behaviour",
+                "eloquent",
+                "laravel",
+                "model",
+                "sort",
+                "sortable"
+            ],
+            "support": {
+                "issues": "https://github.com/spatie/eloquent-sortable/issues",
+                "source": "https://github.com/spatie/eloquent-sortable/tree/4.0.2"
+            },
+            "funding": [
+                {
+                    "url": "https://spatie.be/open-source/support-us",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/spatie",
+                    "type": "github"
+                }
+            ],
+            "time": "2023-01-23T08:34:14+00:00"
+        },
+        {
             "name": "spatie/invade",
             "version": "1.1.1",
             "source": {
@@ -4157,6 +4839,218 @@
                 }
             ],
             "time": "2022-11-23T07:01:37+00:00"
+        },
+        {
+            "name": "spatie/laravel-tags",
+            "version": "4.3.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-tags.git",
+                "reference": "490a8828dc9396ddee60ed580f6b5924b7c497db"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-tags/zipball/490a8828dc9396ddee60ed580f6b5924b7c497db",
+                "reference": "490a8828dc9396ddee60ed580f6b5924b7c497db",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "^8.67|^9.0|^10.0",
+                "nesbot/carbon": "^2.63",
+                "php": "^8.0",
+                "spatie/eloquent-sortable": "^3.10|^4.0",
+                "spatie/laravel-package-tools": "^1.4",
+                "spatie/laravel-translatable": "^4.6|^5.0|^6.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^6.13|^7.0|^8.0",
+                "pestphp/pest": "^1.22",
+                "phpunit/phpunit": "^9.5.2"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Spatie\\Tags\\TagsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\Tags\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Add tags and taggable behaviour to your Laravel app",
+            "homepage": "https://github.com/spatie/laravel-tags",
+            "keywords": [
+                "laravel-tags",
+                "spatie"
+            ],
+            "support": {
+                "issues": "https://github.com/spatie/laravel-tags/issues",
+                "source": "https://github.com/spatie/laravel-tags/tree/4.3.7"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/spatie",
+                    "type": "github"
+                }
+            ],
+            "time": "2023-01-25T09:12:48+00:00"
+        },
+        {
+            "name": "spatie/laravel-translatable",
+            "version": "6.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-translatable.git",
+                "reference": "b3f6fa43ce05d7640ca9eacf4fee9c0037fc84d2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-translatable/zipball/b3f6fa43ce05d7640ca9eacf4fee9c0037fc84d2",
+                "reference": "b3f6fa43ce05d7640ca9eacf4fee9c0037fc84d2",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": "^9.0|^10.0",
+                "illuminate/support": "^9.0|^10.0",
+                "php": "^8.0",
+                "spatie/laravel-package-tools": "^1.11"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.4",
+                "orchestra/testbench": "^7.0|^8.0",
+                "pestphp/pest": "^1.20"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Spatie\\Translatable\\TranslatableServiceProvider"
+                    ]
+                },
+                "aliases": {
+                    "Translatable": "Spatie\\Translatable\\Facades\\Translatable"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\Translatable\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Sebastian De Deyne",
+                    "email": "sebastian@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A trait to make an Eloquent model hold translations",
+            "homepage": "https://github.com/spatie/laravel-translatable",
+            "keywords": [
+                "eloquent",
+                "i8n",
+                "laravel-translatable",
+                "model",
+                "multilingual",
+                "spatie",
+                "translate"
+            ],
+            "support": {
+                "source": "https://github.com/spatie/laravel-translatable/tree/6.3.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/spatie",
+                    "type": "github"
+                }
+            ],
+            "time": "2023-01-14T20:57:45+00:00"
+        },
+        {
+            "name": "spatie/simple-excel",
+            "version": "3.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/simple-excel.git",
+                "reference": "bbef9873a0182f7d2ec2add7fd7436c9e78318c5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/simple-excel/zipball/bbef9873a0182f7d2ec2add7fd7436c9e78318c5",
+                "reference": "bbef9873a0182f7d2ec2add7fd7436c9e78318c5",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^8.71|^9.0|^10.0",
+                "openspout/openspout": "^4.8",
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "pestphp/pest-plugin-laravel": "^1.3",
+                "phpunit/phpunit": "^9.4",
+                "spatie/pest-plugin-snapshots": "^1.1",
+                "spatie/phpunit-snapshot-assertions": "^4.0",
+                "spatie/temporary-directory": "^1.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\SimpleExcel\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Read and write simple Excel and CSV files",
+            "homepage": "https://github.com/spatie/simple-excel",
+            "keywords": [
+                "simple-excel",
+                "spatie"
+            ],
+            "support": {
+                "source": "https://github.com/spatie/simple-excel/tree/3.1.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/spatie",
+                    "type": "github"
+                }
+            ],
+            "time": "2023-01-20T16:52:54+00:00"
         },
         {
             "name": "symfony/console",
@@ -6691,6 +7585,54 @@
                 }
             ],
             "time": "2022-03-08T17:03:00+00:00"
+        },
+        {
+            "name": "webbingbrasil/filament-datefilter",
+            "version": "1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/webbingbrasil/filament-datefilter.git",
+                "reference": "3613479d857ee5192966b9450441b577a3d1ed1f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/webbingbrasil/filament-datefilter/zipball/3613479d857ee5192966b9450441b577a3d1ed1f",
+                "reference": "3613479d857ee5192966b9450441b577a3d1ed1f",
+                "shasum": ""
+            },
+            "require": {
+                "filament/tables": "^2.15",
+                "php": "^8.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Webbingbrasil\\FilamentDateFilter\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Danilo Andrade",
+                    "email": "danilo@webbingbrasil.com.br",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Date filter component for filament tables.",
+            "homepage": "https://github.com/webbingbrasil/filament-datefilter",
+            "keywords": [
+                "filament",
+                "filter",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/webbingbrasil/filament-datefilter/issues",
+                "source": "https://github.com/webbingbrasil/filament-datefilter/tree/1.1.1"
+            },
+            "time": "2022-10-24T21:46:22+00:00"
         },
         {
             "name": "webmozart/assert",

@@ -18,6 +18,7 @@ class TeamMember extends Model
         'n_ss',
         'recruitment_date',
         'send_info',
+        'team_member_id',
     ];
 
     protected $searchableFields = ['*'];
@@ -31,6 +32,6 @@ class TeamMember extends Model
 
     public function user()
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class, 'team_member_id');
     }
 }

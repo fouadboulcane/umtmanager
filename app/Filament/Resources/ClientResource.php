@@ -19,7 +19,7 @@ class ClientResource extends Resource
 {
     protected static ?string $model = Client::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
     protected static ?string $recordTitleAttribute = 'name';
 
@@ -153,61 +153,79 @@ class ClientResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')->limit(50),
-                Tables\Columns\TextColumn::make('address')->limit(50),
-                Tables\Columns\TextColumn::make('city')->limit(50),
-                Tables\Columns\TextColumn::make('state')->limit(50),
-                Tables\Columns\TextColumn::make('zipcode')->limit(50),
-                Tables\Columns\TextColumn::make('website')->limit(50),
-                Tables\Columns\TextColumn::make('tva_number')->limit(50),
-                Tables\Columns\TextColumn::make('currency.name')->limit(50),
-                Tables\Columns\TextColumn::make('rc')->limit(50),
-                Tables\Columns\TextColumn::make('nif')->limit(50),
-                Tables\Columns\TextColumn::make('art')->limit(50),
-                Tables\Columns\BooleanColumn::make('online_payment'),
+                Tables\Columns\TextColumn::make('name')->label('Company Name')->limit(50)->searchable()->toggleable(),
+                Tables\Columns\ViewColumn::make('mainContact')->label('Main Contact')->view('tables.columns.contact')->toggleable(),
+                Tables\Columns\ViewColumn::make('contacts')->view('tables.columns.contacts')->toggleable(),
+                Tables\Columns\BadgeColumn::make('projects_count')->label('Projects')->toggleable(),
+                Tables\Columns\TextColumn::make('invoiceTotal')
+                        ->label('Invoice Amount')
+                        ->toggleable()->formatStateUsing(fn($record) => $record->invoiceAmount()),
+                Tables\Columns\TextColumn::make('paidTotal')
+                        ->label('Paid')
+                        ->toggleable()->formatStateUsing(fn($record) => $record->paidAmount()),
+                Tables\Columns\TextColumn::make('unpaidTotal')
+                        ->label('Unpaid')
+                        ->toggleable()->formatStateUsing(fn($record) => $record->unpaidAmount()),
+                // Tables\Columns\TextColumn::make('paidAmount')->toggleable(),
+                // Tables\Columns\TextColumn::make('unpaidAmount')->toggleable(),
+                // Tables\Columns\TextColumn::make('city')->limit(50),
+                // Tables\Columns\TextColumn::make('state')->limit(50),
+                // Tables\Columns\TextColumn::make('zipcode')->limit(50),
+                // Tables\Columns\TextColumn::make('website')->limit(50),
+                // Tables\Columns\TextColumn::make('tva_number')->limit(50),
+                // Tables\Columns\TextColumn::make('currency.name')->limit(50),
+                Tables\Columns\TextColumn::make('rc')->limit(50)->toggleable(isToggledHiddenByDefault:true),
+                Tables\Columns\TextColumn::make('nif')->limit(50)->toggleable(isToggledHiddenByDefault:true),
+                Tables\Columns\TextColumn::make('art')->limit(50)->toggleable(isToggledHiddenByDefault:true),
+                // Tables\Columns\BooleanColumn::make('online_payment'),
             ])
             ->filters([
-                Tables\Filters\Filter::make('created_at')
-                    ->form([
-                        Forms\Components\DatePicker::make('created_from'),
-                        Forms\Components\DatePicker::make('created_until'),
-                    ])
-                    ->query(function (Builder $query, array $data): Builder {
-                        return $query
-                            ->when(
-                                $data['created_from'],
-                                fn(
-                                    Builder $query,
-                                    $date
-                                ): Builder => $query->whereDate(
-                                    'created_at',
-                                    '>=',
-                                    $date
-                                )
-                            )
-                            ->when(
-                                $data['created_until'],
-                                fn(
-                                    Builder $query,
-                                    $date
-                                ): Builder => $query->whereDate(
-                                    'created_at',
-                                    '<=',
-                                    $date
-                                )
-                            );
-                    }),
+                // Tables\Filters\Filter::make('created_at')
+                //     ->form([
+                //         Forms\Components\DatePicker::make('created_from'),
+                //         Forms\Components\DatePicker::make('created_until'),
+                //     ])
+                //     ->query(function (Builder $query, array $data): Builder {
+                //         return $query
+                //             ->when(
+                //                 $data['created_from'],
+                //                 fn(
+                //                     Builder $query,
+                //                     $date
+                //                 ): Builder => $query->whereDate(
+                //                     'created_at',
+                //                     '>=',
+                //                     $date
+                //                 )
+                //             )
+                //             ->when(
+                //                 $data['created_until'],
+                //                 fn(
+                //                     Builder $query,
+                //                     $date
+                //                 ): Builder => $query->whereDate(
+                //                     'created_at',
+                //                     '<=',
+                //                     $date
+                //                 )
+                //             );
+                //     }),
 
                 MultiSelectFilter::make('currency_id')->relationship(
                     'currency',
                     'name'
                 ),
+            ])
+            ->actions([
+                Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ]);
     }
 
     public static function getRelations(): array
     {
         return [
+            ClientResource\RelationManagers\ContactsRelationManager::class,
             ClientResource\RelationManagers\ProjectsRelationManager::class,
             ClientResource\RelationManagers\DevisRelationManager::class,
             ClientResource\RelationManagers\EventsRelationManager::class,
@@ -226,5 +244,10 @@ class ClientResource extends Resource
             'create' => Pages\CreateClient::route('/create'),
             'edit' => Pages\EditClient::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->withCount('projects');
     }
 }

@@ -22,6 +22,6 @@ class Presence extends Model
 
     public function teamMember()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

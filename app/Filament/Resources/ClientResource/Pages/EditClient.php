@@ -4,6 +4,7 @@ namespace App\Filament\Resources\ClientResource\Pages;
 
 use Filament\Resources\Pages\EditRecord;
 use App\Filament\Resources\ClientResource;
+use App\Filament\Resources\ClientResource\Widgets\ClientStats;
 
 class EditClient extends EditRecord
 {
@@ -18,4 +19,18 @@ class EditClient extends EditRecord
     // {
     //     return null;
     // }
+
+    public function getHeaderWidgetsColumns(): int | array
+    {
+        return [
+            'lg' => 5,
+        ];
+    }
+
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            ClientStats::class,
+        ];
+    }
 }

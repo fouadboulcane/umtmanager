@@ -20,7 +20,7 @@ class ArticleResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'title';
 
-    protected static ?string $navigationGroup = 'Other';
+    protected static ?string $navigationGroup = 'Finance';
 
     public static function form(Form $form): Form
     {
@@ -63,16 +63,6 @@ class ArticleResource extends Resource
                             'md' => 12,
                             'lg' => 12,
                         ]),
-
-                    TextInput::make('quantity')
-                        ->rules(['required', 'numeric'])
-                        ->numeric()
-                        ->placeholder('Quantity')
-                        ->columnSpan([
-                            'default' => 12,
-                            'md' => 12,
-                            'lg' => 12,
-                        ]),
                 ]),
             ]),
         ]);
@@ -83,10 +73,9 @@ class ArticleResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('title')->limit(50),
-                Tables\Columns\TextColumn::make('description')->limit(50),
+                // Tables\Columns\TextColumn::make('description')->limit(50),
                 Tables\Columns\TextColumn::make('price'),
                 Tables\Columns\TextColumn::make('unit')->limit(50),
-                Tables\Columns\TextColumn::make('quantity'),
             ])
             ->filters([
                 Tables\Filters\Filter::make('created_at')
@@ -119,6 +108,10 @@ class ArticleResource extends Resource
                                 )
                             );
                     }),
+            ])
+            ->actions([
+                Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ]);
     }
 

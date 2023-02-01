@@ -15,10 +15,11 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\UserResource\Pages;
 use Filament\Forms\Components\BelongsToManyMultiSelect;
 use Filament\Forms\Components\BelongsToSelect;
-use Illuminate\Database\Eloquent\Collection;
+use Filament\Forms\Components\FileUpload;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\BulkAction;
 use Filament\Tables\Filters\MultiSelectFilter;
+use Filament\Tables\Filters\SelectFilter;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Str;
 
@@ -26,7 +27,7 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-users';
 
     protected static ?string $recordTitleAttribute = 'name';
 
@@ -35,7 +36,17 @@ class UserResource extends Resource
         return $form->schema([
             Card::make()->schema([
                 Grid::make(['default' => 0])->schema([
-                    TextInput::make('name')
+                    FileUpload::make('avatar_url'),
+                    TextInput::make('first_name')
+                        ->rules(['required', 'max:255', 'string'])
+                        ->placeholder('Name')
+                        ->columnSpan([
+                            'default' => 12,
+                            'md' => 12,
+                            'lg' => 12,
+                        ]),
+
+                    TextInput::make('last_name')
                         ->rules(['required', 'max:255', 'string'])
                         ->placeholder('Name')
                         ->columnSpan([
@@ -72,17 +83,6 @@ class UserResource extends Resource
                             'md' => 12,
                             'lg' => 12,
                         ]),
-
-                    BelongsToSelect::make('team_member_id')
-                        ->rules(['nullable', 'exists:team_members,id'])
-                        ->relationship('teamMember', 'job_title')
-                        ->searchable()
-                        ->placeholder('Team Member')
-                        ->columnSpan([
-                            'default' => 12,
-                            'md' => 12,
-                            'lg' => 12,
-                        ]),
                 ]),
             ]),
         ]);
@@ -92,56 +92,55 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                // Tables\Columns\View::make('tables.columns.user-cell')
-                //     ->components([
-                //         TextColumn::make('name'),
-                //         TextColumn::make('email'),
-                //     ]),
-                Tables\Columns\TextColumn::make('id'),
-                Tables\Columns\ViewColumn::make('name')->view('tables.columns.user-cell'),
-                // Tables\Columns\TextColumn::make('name')->limit(50),
-                // Tables\Columns\TextColumn::make('email')->limit(50),
+                // Tables\Columns\TextColumn::make('id'),
+                // Tables\Columns\ImageColumn::make('avatar_url'),
+                // Tables\Columns\TextColumn::make('fullname')->searchable()->sortable(),
+                Tables\Columns\ViewColumn::make('name')->view('tables.columns.user-cell')->searchable(['first_name', 'last_name', 'email']),
+                // Tables\Columns\TextColumn::make('email')->searchable(),
+                Tables\Columns\BadgeColumn::make('teamMember.job_title')->label('Job Title')->toggleable(),
+                Tables\Columns\TextColumn::make('userMeta.phone')->label('Phone')->toggleable(),
                 // Tables\Columns\TextColumn::make('teamMember.job_title')->limit(50),
                 Tables\Columns\TagsColumn::make('roles.name')->limit(3),
                     // ->getStateUsing(fn ($state): string => $state->map(fn ($tag) => Str::headline($tag))),
                 Tables\Columns\ToggleColumn::make('enable_login'),
             ])
             ->filters([
-                Tables\Filters\Filter::make('created_at')
-                    ->form([
-                        Forms\Components\DatePicker::make('created_from'),
-                        Forms\Components\DatePicker::make('created_until'),
-                    ])
-                    ->query(function (Builder $query, array $data): Builder {
-                        return $query
-                            ->when(
-                                $data['created_from'],
-                                fn(
-                                    Builder $query,
-                                    $date
-                                ): Builder => $query->whereDate(
-                                    'created_at',
-                                    '>=',
-                                    $date
-                                )
-                            )
-                            ->when(
-                                $data['created_until'],
-                                fn(
-                                    Builder $query,
-                                    $date
-                                ): Builder => $query->whereDate(
-                                    'created_at',
-                                    '<=',
-                                    $date
-                                )
-                            );
-                    }),
+                // Tables\Filters\Filter::make('created_at')
+                //     ->form([
+                //         Forms\Components\DatePicker::make('created_from'),
+                //         Forms\Components\DatePicker::make('created_until'),
+                //     ])
+                //     ->query(function (Builder $query, array $data): Builder {
+                //         return $query
+                //             ->when(
+                //                 $data['created_from'],
+                //                 fn(
+                //                     Builder $query,
+                //                     $date
+                //                 ): Builder => $query->whereDate(
+                //                     'created_at',
+                //                     '>=',
+                //                     $date
+                //                 )
+                //             )
+                //             ->when(
+                //                 $data['created_until'],
+                //                 fn(
+                //                     Builder $query,
+                //                     $date
+                //                 ): Builder => $query->whereDate(
+                //                     'created_at',
+                //                     '<=',
+                //                     $date
+                //                 )
+                //             );
+                //     }),
 
-                MultiSelectFilter::make('team_member_id')->relationship(
-                    'teamMember',
-                    'job_title'
-                ),
+                SelectFilter::make('roles')->relationship('roles', 'name')
+                    ->options([
+                        'user' => 'user'
+                    ])
+
             ])
             ->actions([
                 Tables\Actions\ActionGroup::make([
@@ -227,9 +226,11 @@ class UserResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListUsers::route('/'),
-            'create' => Pages\CreateUser::route('/create'),
-            'edit' => Pages\EditUser::route('/{record}/edit'),
+            'index' => Pages\ManageUsers::route('/'),
+            'view' => Pages\ViewUser::route('/{record}'),
+            // 'index' => Pages\ListUsers::route('/'),
+            // 'create' => Pages\CreateUser::route('/create'),
+            // 'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
     }
 }

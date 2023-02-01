@@ -19,6 +19,7 @@ class Task extends Model
         'status',
         'start_date',
         'end_date',
+        'creator_id',
         'member_id',
     ];
 
@@ -32,6 +33,11 @@ class Task extends Model
     public function project()
     {
         return $this->belongsTo(Project::class);
+    }
+
+    public function creator()
+    {
+        return $this->belongsTo(User::class, 'creator_id');
     }
 
     public function assignedMember()
