@@ -97,50 +97,50 @@ class PaymentResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('invoice.id')->formatStateUsing(fn($state) => 'FA-' . sprintf('%04d', $state))->label('Invoice ID')
+                    ->url(fn($record) => route('filament.resources.invoices.view', $record->invoice->id)),
                 Tables\Columns\TextColumn::make('date')->date(),
-                Tables\Columns\TextColumn::make('amount'),
-                Tables\Columns\TextColumn::make('note')->limit(50),
-                Tables\Columns\TextColumn::make('mode')->enum([
+                Tables\Columns\BadgeColumn::make('mode')->enum([
                     'cash' => 'Cash',
                     'postal_check' => 'Postal check',
                     'bank_check' => 'Bank check',
                     'bank_transfer' => 'Bank transfer',
                 ]),
-                Tables\Columns\TextColumn::make('invoice.billing_date')->limit(
-                    50
-                ),
+                Tables\Columns\TextColumn::make('note')->limit(50),
+                Tables\Columns\TextColumn::make('amount'),
+                // Tables\Columns\TextColumn::make('invoice.billing_date')
             ])
             ->filters([
-                Tables\Filters\Filter::make('created_at')
-                    ->form([
-                        Forms\Components\DatePicker::make('created_from'),
-                        Forms\Components\DatePicker::make('created_until'),
-                    ])
-                    ->query(function (Builder $query, array $data): Builder {
-                        return $query
-                            ->when(
-                                $data['created_from'],
-                                fn(
-                                    Builder $query,
-                                    $date
-                                ): Builder => $query->whereDate(
-                                    'created_at',
-                                    '>=',
-                                    $date
-                                )
-                            )
-                            ->when(
-                                $data['created_until'],
-                                fn(
-                                    Builder $query,
-                                    $date
-                                ): Builder => $query->whereDate(
-                                    'created_at',
-                                    '<=',
-                                    $date
-                                )
-                            );
-                    }),
+                // Tables\Filters\Filter::make('created_at')
+                //     ->form([
+                //         Forms\Components\DatePicker::make('created_from'),
+                //         Forms\Components\DatePicker::make('created_until'),
+                //     ])
+                //     ->query(function (Builder $query, array $data): Builder {
+                //         return $query
+                //             ->when(
+                //                 $data['created_from'],
+                //                 fn(
+                //                     Builder $query,
+                //                     $date
+                //                 ): Builder => $query->whereDate(
+                //                     'created_at',
+                //                     '>=',
+                //                     $date
+                //                 )
+                //             )
+                //             ->when(
+                //                 $data['created_until'],
+                //                 fn(
+                //                     Builder $query,
+                //                     $date
+                //                 ): Builder => $query->whereDate(
+                //                     'created_at',
+                //                     '<=',
+                //                     $date
+                //                 )
+                //             );
+                //     }),
 
                 MultiSelectFilter::make('invoice_id')->relationship(
                     'invoice',
@@ -158,8 +158,8 @@ class PaymentResource extends Resource
     {
         return [
             'index' => Pages\ListPayments::route('/'),
-            'create' => Pages\CreatePayment::route('/create'),
-            'edit' => Pages\EditPayment::route('/{record}/edit'),
+            // 'create' => Pages\CreatePayment::route('/create'),
+            // 'edit' => Pages\EditPayment::route('/{record}/edit'),
         ];
     }
 }

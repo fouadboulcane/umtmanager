@@ -17,10 +17,10 @@ use Filament\Tables\Filters\MultiSelectFilter;
 use App\Filament\Resources\ProjectResource\Pages;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Forms\Components\SpatieTagsInput;
+use Filament\Tables\Columns\SpatieTagsColumn;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ViewAction;
-use Filament\Tables\Columns\SpatieTagsColumn;
 
 class ProjectResource extends Resource
 {

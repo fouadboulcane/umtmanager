@@ -13,6 +13,8 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\RichEditor;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\AnouncementResource\Pages;
+use Filament\Forms\Components\Hidden;
+use Illuminate\Support\Facades\Auth;
 
 class AnouncementResource extends Resource
 {
@@ -27,58 +29,57 @@ class AnouncementResource extends Resource
     public static function form(Form $form): Form
     {
         return $form->schema([
-            Card::make()->schema([
-                Grid::make(['default' => 0])->schema([
-                    TextInput::make('title')
-                        ->rules(['required', 'max:255', 'string'])
-                        ->placeholder('Title')
-                        ->columnSpan([
-                            'default' => 12,
-                            'md' => 12,
-                            'lg' => 12,
-                        ]),
+            Grid::make(12)->schema([
+                Hidden::make('user_id')->dehydrateStateUsing(fn() => Auth::id()),
+                TextInput::make('title')
+                    ->rules(['required', 'max:255', 'string'])
+                    ->placeholder('Title')
+                    ->columnSpan([
+                        'default' => 12,
+                        'md' => 12,
+                        'lg' => 12,
+                    ]),
 
-                    RichEditor::make('content')
-                        ->rules(['required', 'max:255', 'string'])
-                        ->placeholder('Content')
-                        ->columnSpan([
-                            'default' => 12,
-                            'md' => 12,
-                            'lg' => 12,
-                        ]),
+                DatePicker::make('start_date')
+                    ->rules(['required', 'date'])
+                    ->placeholder('Start Date')
+                    ->columnSpan([
+                        'default' => 6,
+                        'md' => 6,
+                        'lg' => 6,
+                    ]),
 
-                    DatePicker::make('start_date')
-                        ->rules(['required', 'date'])
-                        ->placeholder('Start Date')
-                        ->columnSpan([
-                            'default' => 12,
-                            'md' => 12,
-                            'lg' => 12,
-                        ]),
+                DatePicker::make('end_date')
+                    ->rules(['required', 'date'])
+                    ->placeholder('End Date')
+                    ->columnSpan([
+                        'default' => 6,
+                        'md' => 6,
+                        'lg' => 6,
+                    ]),
 
-                    DatePicker::make('end_date')
-                        ->rules(['required', 'date'])
-                        ->placeholder('End Date')
-                        ->columnSpan([
-                            'default' => 12,
-                            'md' => 12,
-                            'lg' => 12,
-                        ]),
+                RichEditor::make('content')
+                    ->rules(['required', 'max:255', 'string'])
+                    ->placeholder('Content')
+                    ->columnSpan([
+                        'default' => 12,
+                        'md' => 12,
+                        'lg' => 12,
+                    ]),
 
-                    Select::make('share_with')
-                        ->rules(['required', 'in:all_members,all_clients'])
-                        ->searchable()
-                        ->options([
-                            'all_members' => 'All members',
-                            'all_clients' => 'All clients',
-                        ])
-                        ->placeholder('Share With')
-                        ->columnSpan([
-                            'default' => 12,
-                            'md' => 12,
-                            'lg' => 12,
-                        ]),
-                ]),
+                Select::make('share_with')
+                    ->rules(['required', 'in:all_members,all_clients'])
+                    ->searchable()
+                    ->options([
+                        'all_members' => 'All members',
+                        'all_clients' => 'All clients',
+                    ])
+                    ->placeholder('Share With')
+                    ->columnSpan([
+                        'default' => 12,
+                        'md' => 12,
+                        'lg' => 12,
+                    ]),
             ]),
         ]);
     }
@@ -88,13 +89,14 @@ class AnouncementResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('title')->limit(50)->searchable(),
-                // Tables\Columns\TextColumn::make('content')->limit(50),
+                // Tables\Columns\TextColumn::make('author.name'),
+                Tables\Columns\ViewColumn::make('author')->view('tables.columns.avatar-name'),
                 Tables\Columns\TextColumn::make('start_date')->date(),
                 Tables\Columns\TextColumn::make('end_date')->date(),
-                Tables\Columns\TextColumn::make('share_with')->enum([
-                    'all_members' => 'All members',
-                    'all_clients' => 'All clients',
-                ]),
+                // Tables\Columns\TextColumn::make('share_with')->enum([
+                //     'all_members' => 'All members',
+                //     'all_clients' => 'All clients',
+                // ]),
             ])
             ->filters([
                 // Tables\Filters\Filter::make('created_at')
@@ -129,7 +131,7 @@ class AnouncementResource extends Resource
                 //     }),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->modalWidth('xl'),
                 Tables\Actions\DeleteAction::make()
             ]);
     }
@@ -142,9 +144,10 @@ class AnouncementResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListAnouncements::route('/'),
-            'create' => Pages\CreateAnouncement::route('/create'),
-            'edit' => Pages\EditAnouncement::route('/{record}/edit'),
+            'index' => Pages\ManageAnouncements::route('/'),
+            // 'index' => Pages\ListAnouncements::route('/'),
+            // 'create' => Pages\CreateAnouncement::route('/create'),
+            // 'edit' => Pages\EditAnouncement::route('/{record}/edit'),
         ];
     }
 }

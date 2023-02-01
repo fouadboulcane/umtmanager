@@ -5,11 +5,13 @@ namespace App\Models;
 use App\Models\Scopes\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\Tags\HasTags;
 
 class Task extends Model
 {
     use HasFactory;
     use Searchable;
+    use HasTags;
 
     protected $fillable = [
         'title',

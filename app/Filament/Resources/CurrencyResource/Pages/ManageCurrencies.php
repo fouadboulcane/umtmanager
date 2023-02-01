@@ -20,7 +20,8 @@ class ManageCurrencies extends ManageRecords
             CreateAction::make()
             ->mountUsing(fn () => $this->fillCreateForm())
             ->action(fn (array $arguments) => $this->create($arguments['another'] ?? false))
-            ->modalWidth('lg')
+            ->modalWidth('xl')
+            ->icon('heroicon-o-plus')
             // ->modalSubheading('dds')
         ];
     }

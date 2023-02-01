@@ -28,76 +28,74 @@ class DeviResource extends Resource
     public static function form(Form $form): Form
     {
         return $form->schema([
-            Card::make()->schema([
-                Grid::make(['default' => 0])->schema([
-                    DatePicker::make('start_date')
-                        ->rules(['required', 'date'])
-                        ->placeholder('Start Date')
-                        ->columnSpan([
-                            'default' => 12,
-                            'md' => 12,
-                            'lg' => 12,
-                        ]),
+            Grid::make(12)->schema([
+                DatePicker::make('start_date')
+                    ->rules(['required', 'date'])
+                    ->placeholder('Start Date')
+                    ->columnSpan([
+                        'default' => 6,
+                        'md' => 6,
+                        'lg' => 6,
+                    ]),
 
-                    DatePicker::make('end_date')
-                        ->rules(['required', 'date'])
-                        ->placeholder('End Date')
-                        ->columnSpan([
-                            'default' => 12,
-                            'md' => 12,
-                            'lg' => 12,
-                        ]),
+                DatePicker::make('end_date')
+                    ->rules(['required', 'date'])
+                    ->placeholder('End Date')
+                    ->columnSpan([
+                        'default' => 6,
+                        'md' => 6,
+                        'lg' => 6,
+                    ]),
 
-                    Select::make('tax')
-                        ->rules(['nullable', 'in:dt,tva_19%,tva_9%'])
-                        ->searchable()
-                        ->options([
-                            'dt' => 'Dt',
-                            'tva_19%' => 'Tva 19',
-                            'tva_9%' => 'Tva 9',
-                        ])
-                        ->placeholder('Tax')
-                        ->columnSpan([
-                            'default' => 12,
-                            'md' => 12,
-                            'lg' => 12,
-                        ]),
+                Select::make('tax')
+                    ->rules(['nullable', 'in:dt,tva_19%,tva_9%'])
+                    ->searchable()
+                    ->options([
+                        'dt' => 'DT',
+                        'tva_19%' => 'TVA 19',
+                        'tva_9%' => 'TVA 9',
+                    ])
+                    ->placeholder('Tax')
+                    ->columnSpan([
+                        'default' => 6,
+                        'md' => 6,
+                        'lg' => 6,
+                    ]),
 
-                    Select::make('tax2')
-                        ->rules(['nullable', 'in:dt,tva_19%,tva_9%'])
-                        ->searchable()
-                        ->options([
-                            'dt' => 'Dt',
-                            'tva_19%' => 'Tva 19',
-                            'tva_9%' => 'Tva 9',
-                        ])
-                        ->placeholder('Tax2')
-                        ->columnSpan([
-                            'default' => 12,
-                            'md' => 12,
-                            'lg' => 12,
-                        ]),
+                Select::make('tax2')
+                    ->rules(['nullable', 'in:dt,tva_19%,tva_9%'])
+                    ->searchable()
+                    ->options([
+                        'dt' => 'DT',
+                        'tva_19%' => 'TVA 19',
+                        'tva_9%' => 'TVA 9',
+                    ])
+                    ->placeholder('Tax2')
+                    ->columnSpan([
+                        'default' => 6,
+                        'md' => 6,
+                        'lg' => 6,
+                    ]),
 
-                    RichEditor::make('note')
-                        ->rules(['nullable', 'max:255', 'string'])
-                        ->placeholder('Note')
-                        ->columnSpan([
-                            'default' => 12,
-                            'md' => 12,
-                            'lg' => 12,
-                        ]),
+                BelongsToSelect::make('client_id')
+                    ->rules(['required', 'exists:clients,id'])
+                    ->relationship('client', 'name')
+                    ->searchable()
+                    ->placeholder('Client')
+                    ->columnSpan([
+                        'default' => 12,
+                        'md' => 12,
+                        'lg' => 12,
+                    ]),
 
-                    BelongsToSelect::make('client_id')
-                        ->rules(['required', 'exists:clients,id'])
-                        ->relationship('client', 'name')
-                        ->searchable()
-                        ->placeholder('Client')
-                        ->columnSpan([
-                            'default' => 12,
-                            'md' => 12,
-                            'lg' => 12,
-                        ]),
-                ]),
+                RichEditor::make('note')
+                    ->rules(['nullable', 'max:255', 'string'])
+                    ->placeholder('Note')
+                    ->columnSpan([
+                        'default' => 12,
+                        'md' => 12,
+                        'lg' => 12,
+                    ]),
             ]),
         ]);
     }
@@ -106,57 +104,72 @@ class DeviResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('id')->formatStateUsing(fn($state) => 'DEVIS-#' . $state)->label('Invoice ID')->searchable()
+                    ->url(fn($record) => route('filament.resources.devis.view', $record->id)),
+                Tables\Columns\TextColumn::make('client.name')->limit(50)
+                    ->url(fn($record) => route('filament.resources.clients.edit', $record->client->id)), 
                 Tables\Columns\TextColumn::make('start_date')->date(),
                 Tables\Columns\TextColumn::make('end_date')->date(),
-                Tables\Columns\TextColumn::make('tax')->enum([
-                    'dt' => 'Dt',
-                    'tva_19%' => 'Tva 19',
-                    'tva_9%' => 'Tva 9',
+                Tables\Columns\TextColumn::make('total'),
+                Tables\Columns\BadgeColumn::make('status')
+                ->colors([
+                    'danger' => 'denied',
+                    'success' => 'sent',
+                    'warning' => 'draft'
+                    // 'success' => fn ($state) => in_array($state, ['delivered', 'shipped']),
                 ]),
-                Tables\Columns\TextColumn::make('tax2')->enum([
-                    'dt' => 'Dt',
-                    'tva_19%' => 'Tva 19',
-                    'tva_9%' => 'Tva 9',
-                ]),
-                Tables\Columns\TextColumn::make('note')->limit(50),
-                Tables\Columns\TextColumn::make('client.name')->limit(50),
+                // Tables\Columns\TextColumn::make('tax')->enum([
+                //     'dt' => 'Dt',
+                //     'tva_19%' => 'Tva 19',
+                //     'tva_9%' => 'Tva 9',
+                // ]),
+                // Tables\Columns\TextColumn::make('tax2')->enum([
+                //     'dt' => 'Dt',
+                //     'tva_19%' => 'Tva 19',
+                //     'tva_9%' => 'Tva 9',
+                // ]),
+                // Tables\Columns\TextColumn::make('note')->limit(50),
             ])
             ->filters([
-                Tables\Filters\Filter::make('created_at')
-                    ->form([
-                        Forms\Components\DatePicker::make('created_from'),
-                        Forms\Components\DatePicker::make('created_until'),
-                    ])
-                    ->query(function (Builder $query, array $data): Builder {
-                        return $query
-                            ->when(
-                                $data['created_from'],
-                                fn(
-                                    Builder $query,
-                                    $date
-                                ): Builder => $query->whereDate(
-                                    'created_at',
-                                    '>=',
-                                    $date
-                                )
-                            )
-                            ->when(
-                                $data['created_until'],
-                                fn(
-                                    Builder $query,
-                                    $date
-                                ): Builder => $query->whereDate(
-                                    'created_at',
-                                    '<=',
-                                    $date
-                                )
-                            );
-                    }),
+                // Tables\Filters\Filter::make('created_at')
+                //     ->form([
+                //         Forms\Components\DatePicker::make('created_from'),
+                //         Forms\Components\DatePicker::make('created_until'),
+                //     ])
+                //     ->query(function (Builder $query, array $data): Builder {
+                //         return $query
+                //             ->when(
+                //                 $data['created_from'],
+                //                 fn(
+                //                     Builder $query,
+                //                     $date
+                //                 ): Builder => $query->whereDate(
+                //                     'created_at',
+                //                     '>=',
+                //                     $date
+                //                 )
+                //             )
+                //             ->when(
+                //                 $data['created_until'],
+                //                 fn(
+                //                     Builder $query,
+                //                     $date
+                //                 ): Builder => $query->whereDate(
+                //                     'created_at',
+                //                     '<=',
+                //                     $date
+                //                 )
+                //             );
+                //     }),
 
                 MultiSelectFilter::make('client_id')->relationship(
                     'client',
                     'name'
                 ),
+            ])
+            ->actions([
+                Tables\Actions\EditAction::make()->modalWidth('xl'),
+                Tables\Actions\DeleteAction::make(),
             ]);
     }
 
@@ -168,9 +181,11 @@ class DeviResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListDevis::route('/'),
-            'create' => Pages\CreateDevi::route('/create'),
-            'edit' => Pages\EditDevi::route('/{record}/edit'),
+            'index' => Pages\ManageDevis::route('/'),
+            // 'index' => Pages\ListDevis::route('/'),
+            // 'create' => Pages\CreateDevi::route('/create'),
+            'view' => Pages\ViewDevi::route('/{record}'),
+            // 'edit' => Pages\EditDevi::route('/{record}/edit'),
         ];
     }
 }

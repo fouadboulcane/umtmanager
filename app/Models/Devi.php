@@ -42,4 +42,9 @@ class Devi extends Model
     {
         return $this->morphToMany(Article::class, 'articleable')->withPivot('quantity');
     }
+
+    public function getTotalAttribute()
+    {
+        return $this->articles->sum('total');
+    }
 }
