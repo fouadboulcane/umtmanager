@@ -250,4 +250,14 @@ class ClientResource extends Resource
     {
         return parent::getEloquentQuery()->withCount('projects');
     }
+
+    // public static function getLabel(): ?string 
+    // {
+    //     return __('Client');
+    // }
+
+    // public static function getPluralLabel(): ?string 
+    // {
+    //     return __('clients.name');
+    // }
 }

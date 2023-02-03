@@ -12,9 +12,9 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::table('events', function (Blueprint $table) {
+        Schema::table(config('timex.tables.event.name'), function (Blueprint $table) {
             $table
-                ->foreign('user_id')
+                ->foreign('organizer')
                 ->references('id')
                 ->on('users')
                 ->onUpdate('CASCADE')
@@ -36,8 +36,8 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::table('events', function (Blueprint $table) {
-            $table->dropForeign(['user_id']);
+        Schema::table(config('timex.tables.event.name'), function (Blueprint $table) {
+            $table->dropForeign(['organizer']);
             $table->dropForeign(['client_id']);
         });
     }

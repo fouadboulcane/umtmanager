@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CurrencySeeder::class);
         $this->call(DeviSeeder::class);
         $this->call(DeviRequestSeeder::class);
-        $this->call(EventSeeder::class);
+        // $this->call(EventSeeder::class);
         $this->call(ExpenseSeeder::class);
         $this->call(InvoiceSeeder::class);
         $this->call(LeaveSeeder::class);
