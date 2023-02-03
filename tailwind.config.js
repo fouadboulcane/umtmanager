@@ -27,6 +27,7 @@ module.exports = {
                 warning: colors.yellow,
             }, 
             fontSize: {
+                'xs': '13px',
                 // 'sm': '0.85rem',
                 // 'md': '0.9rem',
                 // 'lg': '0.1rem',

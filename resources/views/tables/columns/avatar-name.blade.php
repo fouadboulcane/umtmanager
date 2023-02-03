@@ -2,6 +2,8 @@
     'user' => $getState()
 ])
 
+
+
 <div class="">
     @if($user)
     <div class="flex items-center">

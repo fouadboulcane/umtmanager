@@ -6,6 +6,10 @@
     --sidebar-width:16rem;
 }
 
+body{
+    font-size:14px;
+}
+
 @layer components {
     .filament-sidebar{
         @apply !bg-primary-800 dark:!bg-gray-700 text-white

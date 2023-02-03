@@ -13,6 +13,8 @@ use Filament\Models\Contracts\HasName;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable implements HasAvatar, HasName
 {
@@ -133,6 +135,51 @@ class User extends Authenticatable implements HasAvatar, HasName
     public function isSuperAdmin()
     {
         return $this->hasRole('super-admin');
+    }
+
+    public function messagesSent()
+    {
+        return $this->hasMany(Message::class, 'sender_id');
+    }
+
+    public function messagesReceived()
+    {
+        return $this->hasMany(Message::class, 'receiver_id');
+    }
+
+    public static function getUsers()
+    {
+        $msgs = DB::table('messages')->select('sender_id', 'receiver_id')
+            ->where('sender_id', Auth::id())
+            ->orWhere('receiver_id', Auth::id())
+            ->get();
+        $users = array();
+
+        foreach($msgs as $msg){
+            if($msg->sender_id == $msg->receiver_id) array_push($users, $msg->sender_id);
+            elseif($msg->sender_id == Auth::id()) array_push($users, $msg->receiver_id);
+            elseif($msg->receiver_id == Auth::id()) array_push($users, $msg->sender_id);
+        }
+        return array_unique($users);
+    }
+
+    public function getMessages($recipient_id)
+    {
+        $sent = Message::with('sender')
+            // ->join('users', 'messages.sender_id', '=', 'users.id')
+            // ->select('subject', 'body', 'sender_id', 'receiver_id', 'name', 'avatar_url')
+            ->where('sender_id', Auth::id())
+            ->where('receiver_id', $recipient_id);
+
+        return $conversation = Message::with('sender')
+            // ->join('users', 'messages.sender_id', '=', 'users.id')
+            // ->select('subject', 'body', 'sender_id', 'receiver_id', 'name', 'avatar_url')
+            ->where('sender_id', $recipient_id)
+            ->where('receiver_id', Auth::id())
+            ->union($sent)
+            // ->latest()
+            // ->join('sender')
+            ->get();
     }
 
     public function getFilamentName(): string 

@@ -21,6 +21,7 @@ use Filament\Tables\Columns\SpatieTagsColumn;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ViewAction;
+use RyanChandler\FilamentProgressColumn\ProgressColumn;
 
 class ProjectResource extends Resource
 {
@@ -111,11 +112,13 @@ class ProjectResource extends Resource
                 // Tables\Columns\TextColumn::make('id'),
                 Tables\Columns\ViewColumn::make('title')
                     ->sortable()->searchable(['title'])->view('tables.columns.title-with-tags')->toggleable(),
-                Tables\Columns\TextColumn::make('client.name')->limit(50)->searchable()->toggleable(),
+                Tables\Columns\TextColumn::make('client.name')->limit(50)->searchable()->toggleable()
+                    ->url(fn ($record) => route('filament.resources.clients.edit', $record->client->id)),
                 Tables\Columns\TextColumn::make('price')->toggleable(),
                 // Tables\Columns\TextColumn::make('description')->limit(50),
                 Tables\Columns\TextColumn::make('start_date')->date()->toggleable(),
                 Tables\Columns\TextColumn::make('end_date')->date()->toggleable(),
+                ProgressColumn::make('progress'),
                 // SpatieTagsColumn::make('tags'),
                 Tables\Columns\BadgeColumn::make('status')
                     ->colors([
@@ -171,16 +174,16 @@ class ProjectResource extends Resource
                     ])
             ])
             ->actions([
-                ViewAction::make(),
-                EditAction::make()->modalWidth('xl'),
-                DeleteAction::make(),
+                ViewAction::make()->iconButton(),
+                EditAction::make()->modalWidth('xl')->iconButton(),
+                DeleteAction::make()->iconButton(),
             ]);
     }
 
     public static function getRelations(): array
     {
         return [
-            ProjectResource\RelationManagers\UsersRelationManager::class,
+            // ProjectResource\RelationManagers\UsersRelationManager::class,
             ProjectResource\RelationManagers\TasksRelationManager::class,
             ProjectResource\RelationManagers\ExpensesRelationManager::class,
             ProjectResource\RelationManagers\InvoicesRelationManager::class,

@@ -43,6 +43,7 @@ class DatabaseSeeder extends Seeder
         $this->call(TaskSeeder::class);
         $this->call(TeamMemberSeeder::class);
         $this->call(TicketSeeder::class);
+        $this->call(MessageSeeder::class);
         $this->call(UserSeeder::class);
         $this->call(UserMetaSeeder::class);
     }

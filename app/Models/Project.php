@@ -31,6 +31,8 @@ class Project extends Model
         'end_date' => 'date',
     ];
 
+    protected $appends = ['progress'];
+
     public function client()
     {
         return $this->belongsTo(Client::class);
@@ -39,6 +41,11 @@ class Project extends Model
     public function tasks()
     {
         return $this->hasMany(Task::class);
+    }
+
+    public function doneTasks()
+    {
+        return $this->tasks->where('status', 'done');
     }
 
     public function expenses()
@@ -81,5 +88,16 @@ class Project extends Model
         // $user_ids = DB::table('task_user')->whereIn('task_id', $task_ids)->pluck('user_id');
         // Log::info($user_ids);
         // return User::whereIn('id', $user_ids)->get();
+    }
+
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'commentable');
+    }
+
+    public function getProgressAttribute()
+    {
+        $tasks = $this->tasks()->count();
+        return $tasks ? 100* $this->doneTasks()->count() / $tasks : 0;
     }
 }

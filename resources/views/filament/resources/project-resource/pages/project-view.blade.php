@@ -125,41 +125,41 @@
     // dd($members);
 ?>
 
-<div class="overflow-hidden bg-white shadow sm:rounded-lg">
+<div class="overflow-hidden bg-white shadow sm:rounded-lg border border-gray-300 rounded-xl dark:bg-gray-800 dark:border-gray-700">
     <div class="px-4 py-5 sm:px-6">
-      <h3 class="text-lg font-medium leading-6 text-gray-900">Project Informations</h3>
-      <p class="mt-1 max-w-2xl text-sm text-gray-500">Project main informations</p>
+      <h3 class="text-lg font-medium leading-6 text-gray-900 dark:text-white">Project Informations</h3>
+      <p class="mt-1 max-w-2xl text-sm text-gray-500 dark:text-white">Project main informations</p>
     </div>
-    <div class="border-t border-gray-200">
+    <div class="border-t border-gray-300 dark:border-gray-700">
       <dl>
-        <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-          <dt class="text-sm font-medium text-gray-500">Project name</dt>
-          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{{ e($record->title) }}</dd>
+        <div class="bg-gray-50 dark:bg-gray-900 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500 dark:text-white">Project name</dt>
+          <dd class="mt-1 text-sm text-gray-900 dark:text-white sm:col-span-2 sm:mt-0">{{ e($record->title) }}</dd>
         </div>
-        <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-          <dt class="text-sm font-medium text-gray-500">Project description</dt>
-          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{{ e($record->description) }}</dd>
+        <div class="bg-white dark:bg-gray-800 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500 dark:text-white">Project description</dt>
+          <dd class="mt-1 text-sm text-gray-900 dark:text-white sm:col-span-2 sm:mt-0">{{ e($record->description) }}</dd>
         </div>
-        <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-            <dt class="text-sm font-medium text-gray-500">Client</dt>
-            <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><a href="{{ route('filament.resources.clients.edit', $record->id) }}">{{ e($record->client->name) }}</a></dd>
+        <div class="bg-gray-50 dark:bg-gray-900 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500 dark:text-white">Email address</dt>
+          <dd class="mt-1 text-sm text-gray-900 dark:text-white sm:col-span-2 sm:mt-0">margotfoster@example.com</dd>
+        </div>
+        <div class="bg-white dark:bg-gray-800 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt class="text-sm font-medium text-gray-500 dark:text-white">Client</dt>
+            <dd class="mt-1 text-sm text-gray-900 dark:text-white sm:col-span-2 sm:mt-0"><a href="{{ route('filament.resources.clients.edit', $record->id) }}">{{ e($record->client->name) }}</a></dd>
           </div>
-        <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-          <dt class="text-sm font-medium text-gray-500">Email address</dt>
-          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">margotfoster@example.com</dd>
+        <div class="bg-gray-50 dark:bg-gray-900 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500 dark:text-white">Price</dt>
+          <dd class="mt-1 text-sm text-gray-900 dark:text-white sm:col-span-2 sm:mt-0">{{ e($record->price) }}</dd>
         </div>
-        <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-          <dt class="text-sm font-medium text-gray-500">Price</dt>
-          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{{ e($record->price) }}</dd>
+        <div class="bg-white dark:bg-gray-800 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500 dark:text-white">Status</dt>
+          <dd class="mt-1 text-sm text-gray-900 dark:text-white sm:col-span-2 sm:mt-0">{{ e($record->status) }}</dd>
         </div>
-        <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-          <dt class="text-sm font-medium text-gray-500">Status</dt>
-          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{{ e($record->status) }}</dd>
-        </div>
-        <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-          <dt class="text-sm font-medium text-gray-500">Attachments</dt>
-          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-            <ul role="list" class="divide-y divide-gray-200 rounded-md border border-gray-200">
+        <div class="bg-gray-50 dark:bg-gray-900 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500 dark:text-white">Attachments</dt>
+          <dd class="mt-1 text-sm text-gray-900 dark:text-white sm:col-span-2 sm:mt-0">
+            <ul role="list" class="divide-y divide-gray-300 rounded-md border border-gray-300 dark:border-gray-700 dark:divide-gray-700 dark:text-white">
               <li class="flex items-center justify-between py-3 pl-3 pr-4 text-sm">
                 <div class="flex w-0 flex-1 items-center">
                   <!-- Heroicon name: mini/paper-clip -->
@@ -203,7 +203,7 @@
 
 @if (count($relationManagers))
   @if (! $this->hasCombinedRelationManagerTabsWithForm())
-      <x-filament::hr />
+      {{-- <x-filament::hr /> --}}
   @endif
 
   <x-filament::resources.relation-managers

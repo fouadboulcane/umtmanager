@@ -12,8 +12,10 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\RichEditor;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Components\BelongsToSelect;
+use Filament\Forms\Components\Hidden;
 use Filament\Tables\Filters\MultiSelectFilter;
 use Filament\Resources\RelationManagers\HasManyRelationManager;
+use Illuminate\Support\Facades\Auth;
 
 class TasksRelationManager extends HasManyRelationManager
 {
@@ -24,7 +26,8 @@ class TasksRelationManager extends HasManyRelationManager
     public static function form(Form $form): Form
     {
         return $form->schema([
-            Grid::make(['default' => 0])->schema([
+            Grid::make(12)->schema([
+                Hidden::make('creator_id')->dehydrateStateUsing(fn() => Auth::id()),
                 TextInput::make('title')
                     ->rules(['required', 'max:255', 'string'])
                     ->placeholder('Title')
@@ -55,9 +58,9 @@ class TasksRelationManager extends HasManyRelationManager
                     ])
                     ->placeholder('Difficulty')
                     ->columnSpan([
-                        'default' => 12,
-                        'md' => 12,
-                        'lg' => 12,
+                        'default' => 6,
+                        'md' => 6,
+                        'lg' => 6,
                     ]),
 
                 Select::make('status')
@@ -71,27 +74,27 @@ class TasksRelationManager extends HasManyRelationManager
                     ])
                     ->placeholder('Status')
                     ->columnSpan([
-                        'default' => 12,
-                        'md' => 12,
-                        'lg' => 12,
+                        'default' => 6,
+                        'md' => 6,
+                        'lg' => 6,
                     ]),
 
                 DatePicker::make('start_date')
                     ->rules(['required', 'date'])
                     ->placeholder('Start Date')
                     ->columnSpan([
-                        'default' => 12,
-                        'md' => 12,
-                        'lg' => 12,
+                        'default' => 6,
+                        'md' => 6,
+                        'lg' => 6,
                     ]),
 
                 DatePicker::make('end_date')
                     ->rules(['required', 'date'])
                     ->placeholder('End Date')
                     ->columnSpan([
-                        'default' => 12,
-                        'md' => 12,
-                        'lg' => 12,
+                        'default' => 6,
+                        'md' => 6,
+                        'lg' => 6,
                     ]),
             ]),
         ]);
@@ -121,41 +124,44 @@ class TasksRelationManager extends HasManyRelationManager
                 Tables\Columns\TextColumn::make('end_date')->date(),
             ])
             ->filters([
-                Tables\Filters\Filter::make('created_at')
-                    ->form([
-                        Forms\Components\DatePicker::make('created_from'),
-                        Forms\Components\DatePicker::make('created_until'),
-                    ])
-                    ->query(function (Builder $query, array $data): Builder {
-                        return $query
-                            ->when(
-                                $data['created_from'],
-                                fn(
-                                    Builder $query,
-                                    $date
-                                ): Builder => $query->whereDate(
-                                    'created_at',
-                                    '>=',
-                                    $date
-                                )
-                            )
-                            ->when(
-                                $data['created_until'],
-                                fn(
-                                    Builder $query,
-                                    $date
-                                ): Builder => $query->whereDate(
-                                    'created_at',
-                                    '<=',
-                                    $date
-                                )
-                            );
-                    }),
+                // Tables\Filters\Filter::make('created_at')
+                //     ->form([
+                //         Forms\Components\DatePicker::make('created_from'),
+                //         Forms\Components\DatePicker::make('created_until'),
+                //     ])
+                //     ->query(function (Builder $query, array $data): Builder {
+                //         return $query
+                //             ->when(
+                //                 $data['created_from'],
+                //                 fn(
+                //                     Builder $query,
+                //                     $date
+                //                 ): Builder => $query->whereDate(
+                //                     'created_at',
+                //                     '>=',
+                //                     $date
+                //                 )
+                //             )
+                //             ->when(
+                //                 $data['created_until'],
+                //                 fn(
+                //                     Builder $query,
+                //                     $date
+                //                 ): Builder => $query->whereDate(
+                //                     'created_at',
+                //                     '<=',
+                //                     $date
+                //                 )
+                //             );
+                //     }),
 
                 MultiSelectFilter::make('project_id')->relationship(
                     'project',
                     'title'
                 ),
+            ])
+            ->headerActions([
+                Tables\Actions\CreateAction::make()->icon('heroicon-o-plus')->modalWidth('xl')
             ]);
     }
 }

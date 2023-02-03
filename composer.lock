@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2fb7f1cb67c0341f016251bd4454306a",
+    "content-hash": "678ae54835e0266c7cdf0c8b818c4d2e",
     "packages": [
         {
             "name": "akaunting/laravel-money",
@@ -4504,6 +4504,85 @@
                 }
             ],
             "time": "2022-09-02T11:04:28+00:00"
+        },
+        {
+            "name": "ryangjchandler/filament-progress-column",
+            "version": "v0.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ryangjchandler/filament-progress-column.git",
+                "reference": "7253c59271c119a7aee50ba457fd957c8845f166"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ryangjchandler/filament-progress-column/zipball/7253c59271c119a7aee50ba457fd957c8845f166",
+                "reference": "7253c59271c119a7aee50ba457fd957c8845f166",
+                "shasum": ""
+            },
+            "require": {
+                "filament/filament": "^2.0",
+                "illuminate/contracts": "^9.0",
+                "php": "^8.0",
+                "spatie/laravel-package-tools": "^1.9.2"
+            },
+            "require-dev": {
+                "nunomaduro/collision": "^6.0",
+                "nunomaduro/larastan": "^2.0.1",
+                "orchestra/testbench": "^7.0",
+                "pestphp/pest": "^1.21",
+                "pestphp/pest-plugin-laravel": "^1.1",
+                "phpstan/extension-installer": "^1.1",
+                "phpstan/phpstan-deprecation-rules": "^1.0",
+                "phpstan/phpstan-phpunit": "^1.0",
+                "phpunit/phpunit": "^9.5",
+                "spatie/laravel-ray": "^1.26"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "RyanChandler\\FilamentProgressColumn\\FilamentProgressColumnServiceProvider"
+                    ],
+                    "aliases": {
+                        "FilamentProgressColumn": "RyanChandler\\FilamentProgressColumn\\Facades\\FilamentProgressColumn"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "RyanChandler\\FilamentProgressColumn\\": "src",
+                    "RyanChandler\\FilamentProgressColumn\\Database\\Factories\\": "database/factories"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ryan Chandler",
+                    "email": "support@ryangjchandler.co.uk",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Add a progress bar column to your Filament tables.",
+            "homepage": "https://github.com/ryangjchandler/filament-progress-column",
+            "keywords": [
+                "filament-progress-column",
+                "laravel",
+                "ryangjchandler"
+            ],
+            "support": {
+                "issues": "https://github.com/ryangjchandler/filament-progress-column/issues",
+                "source": "https://github.com/ryangjchandler/filament-progress-column/tree/v0.3.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/ryangjchandler",
+                    "type": "github"
+                }
+            ],
+            "time": "2022-06-29T23:36:04+00:00"
         },
         {
             "name": "sabberworm/php-css-parser",
