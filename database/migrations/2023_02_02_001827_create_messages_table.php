@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('subject');
+            $table->string('subject')->nullable();
             $table->text('body');
             $table->unsignedBigInteger('sender_id');
             $table->unsignedBigInteger('receiver_id');

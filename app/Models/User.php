@@ -147,6 +147,11 @@ class User extends Authenticatable implements HasAvatar, HasName
         return $this->hasMany(Message::class, 'receiver_id');
     }
 
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
     public static function getUsers()
     {
         $msgs = DB::table('messages')->select('sender_id', 'receiver_id')
@@ -165,13 +170,13 @@ class User extends Authenticatable implements HasAvatar, HasName
 
     public function getMessages($recipient_id)
     {
-        $sent = Message::with('sender')
+        $sent = Message::with('sender', 'receiver')
             // ->join('users', 'messages.sender_id', '=', 'users.id')
             // ->select('subject', 'body', 'sender_id', 'receiver_id', 'name', 'avatar_url')
             ->where('sender_id', Auth::id())
             ->where('receiver_id', $recipient_id);
 
-        return $conversation = Message::with('sender')
+        return Message::with('sender', 'receiver')
             // ->join('users', 'messages.sender_id', '=', 'users.id')
             // ->select('subject', 'body', 'sender_id', 'receiver_id', 'name', 'avatar_url')
             ->where('sender_id', $recipient_id)

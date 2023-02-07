@@ -34,56 +34,55 @@ class UserResource extends Resource
     public static function form(Form $form): Form
     {
         return $form->schema([
-            Card::make()->schema([
-                Grid::make(['default' => 0])->schema([
-                    FileUpload::make('avatar_url'),
-                    TextInput::make('first_name')
-                        ->rules(['required', 'max:255', 'string'])
-                        ->placeholder('Name')
-                        ->columnSpan([
-                            'default' => 12,
-                            'md' => 12,
-                            'lg' => 12,
-                        ]),
+            Grid::make(12)->schema([
+                FileUpload::make('avatar_url')->disableLabel()
+                    ->extraAttributes(['class' => 'rounded-full w-16 h-16 mx-auto']),
+                TextInput::make('first_name')
+                    ->rules(['required', 'max:255', 'string'])
+                    ->placeholder('Name')
+                    ->columnSpan([
+                        'default' => 12,
+                        'md' => 12,
+                        'lg' => 12,
+                    ])->inlineLabel(),
 
-                    TextInput::make('last_name')
-                        ->rules(['required', 'max:255', 'string'])
-                        ->placeholder('Name')
-                        ->columnSpan([
-                            'default' => 12,
-                            'md' => 12,
-                            'lg' => 12,
-                        ]),
+                TextInput::make('last_name')
+                    ->rules(['required', 'max:255', 'string'])
+                    ->placeholder('Name')
+                    ->columnSpan([
+                        'default' => 12,
+                        'md' => 12,
+                        'lg' => 12,
+                    ])->inlineLabel(),
 
-                    TextInput::make('email')
-                        ->rules(['required', 'email'])
-                        ->unique(
-                            'users',
-                            'email',
-                            fn(?Model $record) => $record
-                        )
-                        ->email()
-                        ->placeholder('Email')
-                        ->columnSpan([
-                            'default' => 12,
-                            'md' => 12,
-                            'lg' => 12,
-                        ]),
+                TextInput::make('email')
+                    ->rules(['required', 'email'])
+                    ->unique(
+                        'users',
+                        'email',
+                        fn(?Model $record) => $record
+                    )
+                    ->email()
+                    ->placeholder('Email')
+                    ->columnSpan([
+                        'default' => 12,
+                        'md' => 12,
+                        'lg' => 12,
+                    ])->inlineLabel(),
 
-                    TextInput::make('password')
-                        ->password()
-                        ->dehydrateStateUsing(fn($state) => \Hash::make($state))
-                        ->required(
-                            fn(Component $livewire) => $livewire instanceof
-                                Pages\CreateUser
-                        )
-                        ->placeholder('Password')
-                        ->columnSpan([
-                            'default' => 12,
-                            'md' => 12,
-                            'lg' => 12,
-                        ]),
-                ]),
+                TextInput::make('password')
+                    ->password()
+                    ->dehydrateStateUsing(fn($state) => \Hash::make($state))
+                    ->required(
+                        fn(Component $livewire) => $livewire instanceof
+                            Pages\CreateUser
+                    )
+                    ->placeholder('Password')
+                    ->columnSpan([
+                        'default' => 12,
+                        'md' => 12,
+                        'lg' => 12,
+                    ])->inlineLabel(),
             ]),
         ]);
     }
@@ -144,7 +143,7 @@ class UserResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ActionGroup::make([
-                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\EditAction::make()->modalWidth('xl'),
                     Action::make('updateRoles')
                         ->label('Update Roles')
                         ->mountUsing(fn (Forms\ComponentContainer $form, User $record) => $form->fill([]))

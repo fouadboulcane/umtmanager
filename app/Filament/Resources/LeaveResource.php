@@ -68,7 +68,7 @@ class LeaveResource extends Resource
                     ->rules(['required', 'date'])
                     ->label(fn($get) => $get('duration') == 'one_day' ? 'Date' : 'Start Date')
                     // ->hidden(fn($get) => $get('duration') != 'multiple_days')
-                    ->placeholder('Start Date')
+                    ->placeholder(fn($get) => $get('duration') == 'one_day' ? 'Date' : 'Start Date')
                     ->columnSpan(fn($get) => $get('duration') == 'one_day' ? 2 : 1),
 
                 DatePicker::make('end_date')

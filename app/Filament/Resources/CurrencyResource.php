@@ -33,7 +33,7 @@ class CurrencyResource extends Resource
                             'default' => 12,
                             'md' => 12,
                             'lg' => 12,
-                        ]),
+                        ])->inlineLabel(),
 
                     TextInput::make('symbol')
                         ->rules(['required', 'max:255', 'string'])
@@ -42,7 +42,7 @@ class CurrencyResource extends Resource
                             'default' => 12,
                             'md' => 12,
                             'lg' => 12,
-                        ]),
+                        ])->inlineLabel(),
                 ]),
             // ]),
         ]);

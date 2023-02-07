@@ -2,6 +2,7 @@
 
 namespace App\Filament\Pages;
 
+use App\Models\Comment;
 use App\Models\Message;
 use App\Models\User;
 use Filament\{Tables, Forms};
@@ -12,6 +13,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Pages\Actions\Action;
 use Filament\Pages\Page;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 
 class Messages extends Page
@@ -22,29 +24,56 @@ class Messages extends Page
 
     protected static string $view = 'filament.pages.messages';
 
-    protected $listeners = ['userSelected'];
+    protected $listeners = ['userSelected', 'messageSelected', 'refreshComponent' => '$refresh'];
 
-    public $messages;
+    public $conversation;
 
-    // public Message $message;
+    public $comments;
 
-    // public ?int $receiver_id = null;
-    // public ?string $subject = '';
-    // public ?string $body = ' ?string';
+    public $pageNumber = 1;
 
-    // public function mount(): void
-    // {
-    //     $this->form->fill([
-    //         'receiver_id' => $this->message->receiver_id,
-    //         'subject' => $this->message->subject,
-    //         'body' => $this->message->body,
-    //     ]);
-    // }
+    public $hasMorePages;
 
-    public function userSelected(User $user)
+    public function messageSelected(Message $message) {
+        $this->conversation = $message;
+
+        $this->comments = new Collection();
+        $this->pageNumber = 1;
+        $this->hasMorePages;
+        $this->loadComments();
+    }
+
+    public function mount(): void 
     {
-        $this->messages = auth()->user()->getMessages($user->id);
-        // dd($this->messages);
+        $this->form->fill();
+    }
+
+    public function sendMessage()
+    {
+        $message = $this->conversation->comments()->create($this->form->getState());
+
+        $this->form->fill();
+
+        $this->comments->prepend($message);
+    }
+
+    public function loadComments()
+    {
+        $comments = $this->conversation->comments()->latest()->paginate(5, ['*'], 'page', $this->pageNumber);
+
+        $this->pageNumber += 1;
+
+        $this->hasMorePages = $comments->hasMorePages();
+
+        $this->comments->push(...$comments->items());
+    }
+
+    protected function getFormSchema(): array
+    {
+        return [
+            Hidden::make('user_id')->dehydrateStateUsing(fn() => Auth::id()),
+            RichEditor::make('body')->disableLabel()
+        ];
     }
 
     public function getActions(): array 
@@ -59,7 +88,6 @@ class Messages extends Page
                 RichEditor::make('body')
             ])
             ->action(function($data) {
-                // dd($data);
                 Message::create($data);
             })
             ->after(function($livewire) {
