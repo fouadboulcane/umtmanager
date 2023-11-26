@@ -13,6 +13,11 @@ class KanbanTasks extends FilamentKanbanBoard
     public bool $sortable = true;
     public bool $sortableBetweenStatuses = true;
 
+    // public function onStatusChanged($recordId, $statusId, $fromOrderedIds, $toOrderedIds)
+    // {
+    //     dd($recordId);
+    // }
+
     protected function statuses() : Collection
     {
         return collect([

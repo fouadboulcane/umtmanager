@@ -52,7 +52,8 @@
                                             <x-filament::dropdown.item
                                                 :color="'danger'"
                                                 :icon="'heroicon-o-trash'"
-                                                {{-- :wire:click="" --}}
+                                                {{-- :wire:click="'deleteConversation'" --}}
+                                                x-on:click="$dispatch('open-modal', { id: 'delete-conv-modal'})"
                                                 {{-- :href="$resource['url']" --}}
                                                 {{-- :tag="$resource['url'] ? 'a' : 'button'" --}}
                                             >
@@ -122,7 +123,21 @@
                         </form>
                     </div>
                 </div>
-            </x-filament::card> 
+            </x-filament::card>
+
+            <form wire:submit.prevent="deleteConversation">
+                <x-filament::modal id="delete-conv-modal" :width="'sm'">
+
+                        <p class="filament-modal-subheading text-gray-500">Are you sure you want to delete the conversation #{{ $conversation->id }}</p>
+
+                        <x-slot name="footer">
+                            <x-forms::modal.actions :class="'grid grid-cols-2 gap-2'">
+                                <x-filament::button :color="'secondary'" type="button" x-on:click="$dispatch('close-modal', { id: 'delete-conv-modal'})">Cancel</x-filament::button>
+                                <x-filament::button :color="'danger'" type="submit">Delete</x-filament::button>
+                            </x-forms::modal.actions>
+                        </x-slot>
+                </x-filament::modal>
+            </form>
             @else 
             <x-filament::card :class="'h-full flex justify-center items-center'">
                 <div @class(['w-full h-full text-gray-100', 'dark:text-gray-700' => config('filament.dark_mode'),])>
@@ -133,7 +148,7 @@
             </x-filament::card> 
             @endif
         </div>
-    </div>
+    </div>  
 
 </x-filament::page>
 

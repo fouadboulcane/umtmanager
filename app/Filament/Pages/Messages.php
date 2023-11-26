@@ -6,11 +6,15 @@ use App\Models\Comment;
 use App\Models\Message;
 use App\Models\User;
 use Filament\{Tables, Forms};
+use Filament\Facades\Filament;
 use Filament\Forms\Components\Hidden;
 use Filament\Resources\{Form, Table, Resource};
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Notifications\Actions\Action as NotificationAction;
+use Filament\Notifications\Events\DatabaseNotificationsSent;
+use Filament\Notifications\Notification;
 use Filament\Pages\Actions\Action;
 use Filament\Pages\Page;
 use Illuminate\Database\Eloquent\Collection;
@@ -37,6 +41,8 @@ class Messages extends Page
     public function messageSelected(Message $message) {
         $this->conversation = $message;
 
+        $this->emit('refreshComponent');
+
         $this->comments = new Collection();
         $this->pageNumber = 1;
         $this->hasMorePages;
@@ -56,6 +62,21 @@ class Messages extends Page
 
         $this->comments->prepend($message);
     }
+
+    public function deleteConversation()
+    {
+        $result = Message::find($this->conversation->id)->delete();
+
+        $this->dispatchBrowserEvent('close-modal', ['id' =>'delete-conv-modal']);
+
+        if(!$result) {
+            Filament::notify('danger', 'Error');
+            return;
+        }
+
+        Filament::notify('success', 'Deleted');
+    }
+
 
     public function loadComments()
     {
@@ -88,7 +109,21 @@ class Messages extends Page
                 RichEditor::make('body')
             ])
             ->action(function($data) {
-                Message::create($data);
+                $message = Message::create($data);
+                $recipient = $message->receiver;
+               
+                Notification::make()
+                    ->title($recipient->name)
+                    ->body($message->subject)
+                    ->icon('heroicon-o-mail')
+                    ->sendToDatabase($recipient)
+                    ->actions([
+                        NotificationAction::make('view')
+                            ->url(route('filament.pages.messages'))
+                            ->color('primary')
+                    ]);
+
+                event(new DatabaseNotificationsSent($recipient));
             })
             ->after(function($livewire) {
                 $livewire->emit('refreshUsers');
